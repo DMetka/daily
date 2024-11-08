@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Test{% endblock %}
+
+{% block body %}
+    <div>
+        {% for tasks in task %}
+            <div>
+                {{ tasks.id }} {{ tasks.name }} {{ tasks.text }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
