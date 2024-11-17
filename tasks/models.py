@@ -13,10 +13,10 @@ class Tasks(models.Model):
     title = models.CharField(max_length=25)
     full_text = models.TextField(max_length=250)
     data_create = models.DateTimeField()
-    data_complete = models.DateTimeField()
+    data_complete = models.DateTimeField(null=True, blank=True)
     deadline = models.DateTimeField()
     folder = models.ForeignKey(Folders, on_delete=models.CASCADE, null=True, blank=True)
-    priority = models.PositiveIntegerField(default=2)
+    priority = models.IntegerField(default=2)
     is_completed = models.BooleanField(default=False)
 
 
