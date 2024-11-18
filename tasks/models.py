@@ -1,7 +1,7 @@
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import date
 
 class Folders(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -13,6 +13,7 @@ class Tasks(models.Model):
     title = models.CharField(max_length=25)
     full_text = models.TextField(max_length=250)
     data_create = models.DateTimeField()
+    data_add = models.DateField(default=date.today(), blank=True)
     data_complete = models.DateTimeField(null=True, blank=True)
     deadline = models.DateTimeField()
     folder = models.ForeignKey(Folders, on_delete=models.CASCADE, null=True, blank=True)
