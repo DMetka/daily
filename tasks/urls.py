@@ -16,4 +16,6 @@ urlpatterns = [
     path('filter_by_deadline', views.filter_by_deadline, name='filter_by_deadline'),
     path('filter_by_folders', views.filter_by_folders, name='filter_by_folders'),
     path('filter_by_status', views.filter_by_status, name='filter_by_status'),
+    path('get_now_week', views.get_now_week, name='get_now_week'),
+    path('get_now_month', views.get_now_month, name='get_now_month'),
 ]
