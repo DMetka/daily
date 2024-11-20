@@ -15,7 +15,7 @@ class Tasks(models.Model):
     data_create = models.DateTimeField()
     data_add = models.DateField(default=date.today(), blank=True)
     data_complete = models.DateTimeField(null=True, blank=True)
-    deadline = models.DateTimeField()
+    deadline = models.DateField()
     folder = models.ForeignKey(Folders, on_delete=models.CASCADE, null=True, blank=True)
     priority = models.IntegerField(default=2)
     is_completed = models.BooleanField(default=False)

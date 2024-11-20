@@ -34,8 +34,15 @@ def delete_tasks_from_folder(request):
     return JsonResponse({'success': True})
 
 
-def main_page(request):
-    return JsonResponse({'success': True})
+'''def main_page(request):
+    return JsonResponse({'success': True})'''
+
+
+def index(request):
+    data =  {
+        'title' : 'Главная страница',
+    }
+    return render(request, 'tasks/index.html', data)
 
 
 @login_required
@@ -141,13 +148,14 @@ def add_task(request):
             title = data.get('title')
             full_text = data.get('full_text')
             deadline = data.get('deadline')
-            folder = data.get('folder')
+            #folder = data.get('folder')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
         except json.JSONDecodeError:
             return JsonResponse({'message': 'Invalid JSON format'}, status=400)
 
-        if not title and not full_text and not deadline and not folder and not priority:
+        #if not title and not full_text and not deadline and not folder and not priority:
+        if not title and not full_text and not deadline and not priority:
             return JsonResponse({'message': 'No find such task'}, status=400)
 
         data_create = timezone.now()
@@ -158,7 +166,7 @@ def add_task(request):
             full_text=full_text,
             data_create=data_create,
             deadline=deadline,
-            folder=folder,
+            #folder=folder,
             priority=priority,
             is_completed=is_completed
         )

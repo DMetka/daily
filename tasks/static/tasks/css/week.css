@@ -1,0 +1,58 @@
+.week-view {
+    margin-top: 5px; /* Отступ между контейнером поиска и неделей */
+    max-width: 100%;
+}
+
+/* Заголовок недели */
+.week-view h2 {
+    text-align: center;
+    color: #3A2D34;
+}
+
+/* Навигация */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.week-view button {
+    background-color: #beaedb;
+    color: #3A2D34;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #75619d;
+}
+
+/* Календарь */
+.calendar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day {
+    flex: 1;
+    border-radius: 5px;
+    margin: 0 5px;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    font-size: 9px;
+}
+
+
+.date {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+
+
+
+
