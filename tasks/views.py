@@ -151,12 +151,18 @@ def add_task(request):
             #folder = data.get('folder')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
+
         except json.JSONDecodeError:
             return JsonResponse({'message': 'Invalid JSON format'}, status=400)
 
         #if not title and not full_text and not deadline and not folder and not priority:
         if not title and not full_text and not deadline and not priority:
             return JsonResponse({'message': 'No find such task'}, status=400)
+
+        if is_completed == True:
+            data_complete = timezone.now()
+        else:
+            data_complete = None
 
         data_create = timezone.now()
 
@@ -168,10 +174,20 @@ def add_task(request):
             deadline=deadline,
             #folder=folder,
             priority=priority,
-            is_completed=is_completed
+            is_completed=is_completed,
+            data_complete=data_complete
         )
 
         return JsonResponse({'message': 'Good job'}, status=201)
 
     else:
         return JsonResponse({'message': 'This method false'}, status=400)
+
+
+@login_required
+def task_completed(request, task_id):
+    task = get_object_or_404(Tasks, id=task_id)
+    task.mark_as_completed()
+    return JsonResponse({"success": True})
+
+
