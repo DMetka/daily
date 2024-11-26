@@ -46,47 +46,32 @@
                 </div>
             </div>
             <div class="week-view">
-                <h2>Неделя</h2>
-                 <div class="navigation">
-                     <button id="prevWeek" onclick="changeWeek(-1)">&#9664;</button> <!-- Левая стрелка -->
-                     <button id="nextWeek" onclick="changeWeek(1)">&#9654;</button> <!-- Правая стрелка -->
-                </div>
-                <div class="calendar" id="calendar">
-                    <div class="day" id="day1">
-                        <p>Пн</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                <h2>Задачи</h2><!--Не знаю как правильно это назвать -->
+                <div class = "calendar-container">
+                    <button id="prevDays" onclick="changeDays(-4)">&#9664;</button> <!-- Левая стрелка -->
+                    <div class="calendar" id="calendar">
+                        <div class="day" id="day1">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                        <div class="day" id="day2">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                        <div class="day" id="day3">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                        <div class="day" id="day4">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
                     </div>
-                    <div class="day" id="day2">
-                        <p>Вт</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
-                    </div>
-                    <div class="day" id="day3">
-                        <p>Ср</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
-                    </div>
-                    <div class="day" id="day4">
-                        <p>Чт</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
-                    </div>
-                    <div class="day" id="day5">
-                        <p>Пт</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
-                    </div>
-                    <div class="day" id="day6">
-                        <p>Сб</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
-                    </div>
-                    <div class="day" id="day7">
-                        <p>Вс</p>
-                        <p class="date"></p>
-                        <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
-                    </div>
+                    <button id="nextDays" onclick="changeDays(4)">&#9654;</button> <!-- Правая стрелка -->
                 </div>
             </div>
             <div class="task">
