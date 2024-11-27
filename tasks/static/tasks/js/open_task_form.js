@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const completedInput = document.getElementById("taskCompleted"); // Выполнена ли задача
 
     // Функция для открытия формы
-    function openForm() {
+    function openForm(date) {
         TaskForm.style.display = 'flex';
+         selectedDate = date; // Сохраняем выбранную дату
         requestAnimationFrame(() => {
             TaskForm.style.transform = 'translateX(0)';
         });
@@ -25,10 +26,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 300);
     }
 
+
     // Обработчик события для кнопок "Добавить задачу"
-    addTaskButtons.forEach(button => {
+    document.querySelectorAll(".add-task-btn").forEach(button => {
         button.addEventListener("click", function() {
-            openForm();
+            const dateElement = this.closest('.day').querySelector('.date');
+            const date = dateElement.getAttribute('data-day'); // Получаем дату из атрибута
+            openForm(date); // Открываем форму с выбранной датой
         });
     });
 
@@ -45,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
             full_text: fullTextInput.value,
             data_create: new Date().toISOString(),
             data_complete: null,
+            data_add: selectedDate, // Используем выбранную дату
             deadline: deadlineInput.value,
             //folder: folderInput.value, // ID папки
             priority: parseInt(priorityInput.value) || 2,

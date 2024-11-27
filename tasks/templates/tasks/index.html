@@ -37,15 +37,17 @@
                     </select>
                 </div>
                 <!-- Иконка колокольчика -->
+
                 <div class="notification-container">
                     <img src="../../static/tasks/img/bell-alarm.svg" alt="Уведомления" class="notification-icon" onclick="toggleNotifications()">
-                    <span id="notificationBadge" class="notification-badge" style="display: none;"></span>
+                    <div class="notification-badge" id="notificationBadge"></div>
                     <div id="notificationPopup" class="notification-popup" style="display: none;">
                         <!-- Здесь будут отображаться напоминания -->
-                    </div>
+                     </div>
                 </div>
 
             </div>
+
             <div class="week-view">
                 <h2>Задачи</h2><!--Не знаю как правильно это назвать -->
                 <div class = "calendar-container">
@@ -54,21 +56,25 @@
                         <div class="day" id="day1">
                             <p class="day-name"></p>
                             <p class="date"></p>
+                            <div class="tasks-container"></div> <!-- Контейнер для задач -->
                             <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
                         </div>
                         <div class="day" id="day2">
                             <p class="day-name"></p>
                             <p class="date"></p>
+                            <div class="tasks-container"></div> <!-- Контейнер для задач -->
                             <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
                         </div>
                         <div class="day" id="day3">
                             <p class="day-name"></p>
                             <p class="date"></p>
+                            <div class="tasks-container"></div> <!-- Контейнер для задач -->
                             <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
                         </div>
                         <div class="day" id="day4">
                             <p class="day-name"></p>
                             <p class="date"></p>
+                            <div class="tasks-container"></div> <!-- Контейнер для задач -->
                             <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
                         </div>
                     </div>
