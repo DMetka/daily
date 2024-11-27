@@ -19,5 +19,7 @@ urlpatterns = [
     path('get_now_week', views.get_now_week, name='get_now_week'),
     path('get_now_month', views.get_now_month, name='get_now_month'),
     path('task_completed/<int:task_id>/', views.task_completed, name='task_completed'),
+    path('get_now_four_days', views.get_now_four_days, name='get_now_four_days'),
+    path('forgotten_task', views.forgotten_task, name='forgotten_task'),
 ]
 

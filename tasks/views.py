@@ -18,9 +18,16 @@ def delete_task(request, task_id):
 
 @login_required
 def remind_task(request):
-    remind_deadline = timezone.now() + timezone.timedelta(days=1)
-    reminders = Tasks.objects.filter(deadline__lt=remind_deadline, is_completed=False).values()
+    remind_deadline = date.today()
+    reminders = Tasks.objects.filter(deadline=remind_deadline, is_completed=False).values()
     return JsonResponse({'reminders': list(reminders)})
+
+
+@login_required
+def forgotten_task(request):
+    forget_deadline = date.today()
+    forgottens = Tasks.objects.filter(deadline__lt=forget_deadline, is_completed=False).values()
+    return JsonResponse({'reminders': list(forgottens)})
 
 
 @login_required
@@ -191,3 +198,12 @@ def task_completed(request, task_id):
     return JsonResponse({"success": True})
 
 
+@login_required
+def get_now_four_days(request):
+    today = date.today()
+    user = request.user
+    offset = int(request.GET.get('offset', 0))
+    start = today + timedelta(days=offset)
+    finish = start + timedelta(days=3)
+    tasks = Tasks.objects.filter(data_add__range=[start, finish], user=user).values()
+    return JsonResponse({'tasks':  list(tasks)})
