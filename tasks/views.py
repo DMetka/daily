@@ -155,7 +155,11 @@ def add_task(request):
             title = data.get('title')
             full_text = data.get('full_text')
             deadline = data.get('deadline')
-            #folder = data.get('folder')
+            folder = data.get('folder')
+            subtask_one = data.get('subtask_one')
+            subtask_two = data.get('subtask_two')
+            subtask_three = data.get('subtask_three')
+            subtask_four = data.get('subtask_four')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
 
@@ -179,10 +183,14 @@ def add_task(request):
             full_text=full_text,
             data_create=data_create,
             deadline=deadline,
-            #folder=folder,
+            folder=folder,
             priority=priority,
             is_completed=is_completed,
-            data_complete=data_complete
+            data_complete=data_complete,
+            subtask_one=subtask_one,
+            subtask_two=subtask_two,
+            subtask_three=subtask_three,
+            subtask_four=subtask_four
         )
 
         return JsonResponse({'message': 'Good job'}, status=201)
