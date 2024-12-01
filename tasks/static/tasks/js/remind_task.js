@@ -40,7 +40,7 @@ function toggleNotifications() {
         .then(data => {
             const reminders = data.reminders;
             const popupContent = reminders.map(reminder => `
-                <div class="notification-item">
+                <div class="notification-popup">
                     <p><strong>${reminder.title}</strong></p>
                     <p>Дедлайн: ${new Date(reminder.deadline).toLocaleDateString()}</p>
                 </div>
