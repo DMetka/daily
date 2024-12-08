@@ -1,0 +1,35 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+</style>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Ежедневник</title>
+  <link rel="stylesheet" href="../../static/tasks/css/main.css">
+  <link rel="stylesheet" href="../../static/tasks/css/task-form.css">
+  <link rel="stylesheet" href="../../static/tasks/css/side-menu.css">
+  <link rel="stylesheet" href="../../static/tasks/css/week.css">
+</head>
+<body>
+    <div class="main-area"><!--Вся страница-->
+        <div class="side_left_menu"><!--Боковое меню-->
+            <div class = "user"><!--Добавляется картинка и имя (еще буду думать как сюда забивать данные с авторизации)-->
+
+                <h3>Моё имя</h3><!--По идее сюда будет добавляться имя пользователя с авторизации-->
+            </div>
+            <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button><!--Кнопка, ведет к моим задачам-->
+            <div class="folders">
+                <p>Папки</p>
+                <ul><!--Здесь должны отображаться папки, пока не доделано--></ul>
+            </div>
+            <div class = "my_task_area">
+                <!-- сюда добавляй любые html штуки которые тебе нужны, если так же будешь делать новый css файл назови его my_task.css -->
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const titleInput = document.getElementById("taskName");
     const fullTextInput = document.getElementById("taskFullText");
     const deadlineInput = document.getElementById("taskDate"); // Поле для даты дедлайна
-    //const folderInput = document.getElementById("taskFolder"); // Поле для папки
+    const folderInput = document.getElementById("taskFolder"); // Поле для папки
     const priorityInput = document.getElementById("taskPriority"); // Поле для приоритета
     const completedInput = document.getElementById("taskCompleted"); // Выполнена ли задача
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
             data_complete: null,
             data_add: selectedDate, // Используем выбранную дату
             deadline: deadlineInput.value,
-            //folder: folderInput.value, // ID папки
+            folder: folderInput.value, // ID папки
             priority: parseInt(priorityInput.value) || 2,
             is_completed: completedInput.checked // Используйте checked для checkbox
         };

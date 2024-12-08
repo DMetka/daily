@@ -51,6 +51,18 @@ def index(request):
     }
     return render(request, 'tasks/index.html', data)
 
+def my_tasks(request):
+    data =  {
+        'title' : 'Мои задачи',
+    }
+    return render(request, 'tasks/my_tasks.html', data)
+
+def go_back_to_index(request):
+    data =  {
+        'title' : 'Главная страница',
+    }
+    return render(request, 'tasks/index.html', data)
+
 
 @login_required
 def sort_by_priority(request):
@@ -155,7 +167,7 @@ def add_task(request):
             title = data.get('title')
             full_text = data.get('full_text')
             deadline = data.get('deadline')
-            #folder = data.get('folder')
+            folder = data.get('folder')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
 
@@ -179,7 +191,7 @@ def add_task(request):
             full_text=full_text,
             data_create=data_create,
             deadline=deadline,
-            #folder=folder,
+            folder=folder,
             priority=priority,
             is_completed=is_completed,
             data_complete=data_complete
@@ -207,3 +219,9 @@ def get_now_four_days(request):
     finish = start + timedelta(days=3)
     tasks = Tasks.objects.filter(data_add__range=[start, finish], user=user).values()
     return JsonResponse({'tasks':  list(tasks)})
+
+@login_required
+def folder_view(request):
+    folders = Folders.objects.filter(user=request.user)  # Фильтруем по текущему пользователю
+    print(folders)  # Для отладки, выводим в консоль
+    return render(request, 'tasks/index.html', {'folders': folders})

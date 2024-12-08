@@ -18,7 +18,7 @@
 
                 <h3>Моё имя</h3><!--По идее сюда будет добавляться имя пользователя с авторизации-->
             </div>
-            <button class = "btn_left"><a href="#">Мои задачи</a></button><!--Кнопка, ведет к моим задачам-->
+            <button class = "btn_left"><a href="{% url 'my_tasks' %}">Мои задачи</a></button><!--Кнопка, ведет к моим задачам-->
             <div class="folders">
                 <p>Папки</p>
                 <ul><!--Здесь должны отображаться папки, пока не доделано--></ul>
@@ -101,6 +101,14 @@
                     </select>
                     </div>
                     <textarea placeholder="Заметка" id = "taskFullText"></textarea><!--Это поле для заметки-->
+                    <select id="taskFolder">
+                        <option value="">Выберите папку</option>
+                        {% for folder in folders %}
+                            <option value="{{ folder.id }}">{{ folder.title }}</option>
+                        {% empty %}
+                            <option value="">Нет доступных папок</option>
+                        {% endfor %}
+                    </select>
                     <div class="subtask-container">
                         <div class="subtask">
                             <input type="text" placeholder="Подзадача">
