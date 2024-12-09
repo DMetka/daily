@@ -1,0 +1,142 @@
+#TaskForm {
+    position: fixed;
+    top: 0; 
+    right: 0; 
+    background-color: #BEAEDB;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 35%;
+    height: 95%;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    color: #3A2D34;
+    display: flex;
+    flex-direction: column;
+}
+
+#TaskForm input[type="text"],
+#TaskForm input[type="date"],
+#TaskForm textarea {
+    width: 100%; 
+    padding: 10px; /* Отступы внутри полей ввода */
+    margin-bottom: 10px; /* Отступ между полями ввода */
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+}
+
+#TaskForm textarea {
+    height: 100px; 
+}
+
+#TaskForm .task-status {
+    display: flex; /* Flexbox для размещения элементов в строку */
+    align-items: center; 
+    margin-bottom: 10px; /* Отступ между статусом задачи и следующими элементами */
+}
+#TaskForm .task-status input[type="checkbox"] {
+    margin-right: 5px; 
+}
+
+#TaskForm .task-status button {
+    padding: 5px 10px; 
+    margin-left: auto; 
+    background-color: #75619D; 
+    color: #E6EFF7; 
+    font-weight: 600;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+#TaskForm .task-status button:hover{
+    background-color: #BEAEDB;
+}
+
+#TaskForm .subtask {
+    margin-top: 10px; 
+}
+
+#TaskForm .subtask input[type="text"] {
+    width: 100%;
+    padding: 5px; 
+    margin-bottom: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+}
+
+#TaskForm .subtask input[type="text"]::placeholder {
+    color: #ccc; 
+}
+
+#TaskForm .subtask input[type="text"]:focus {
+    outline: none; 
+    border-color: #BEAEDB; 
+}
+
+#TaskForm .priority{
+    display: flex;
+    margin-bottom: 20px;
+    height: 5%;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+#TaskForm .task-priority{
+    margin-top: 10px;
+    background-color: #75619D;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: none;
+    color: #E6EFF7 ;
+    font-weight: 600;
+    margin-left: auto; /* Та же проблема что с кнопкой фильтр*/
+    cursor: pointer;
+}
+
+
+.save-btn-container{
+    display: flex; /* Flexbox для контейнера кнопки */
+    justify-content: flex-end; /* Выравнивание кнопки по правому краю */
+    margin-top: auto; 
+}
+
+#SaveTask {
+    padding: 10px 20px; 
+    background-color: #75619D; 
+    color: #E6EFF7; /* Цвет текста кнопки */
+    font-weight: 600;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; /* Курсор при наведении */
+
+}
+
+#SaveTask:hover {
+    background-color: #BEAEDB; 
+}
+
+.button-subtask-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.button-subtask-container button {
+    width: 25px; /* Размер кнопок */
+    height: 25px; /* Высота кнопок */
+    background-color: #75619D;
+    color: #e6eff7;
+    font-weight: 600;
+    border: none;
+    border-radius: 50%; /* Делаем кнопки круглыми */
+    cursor: pointer;
+    font-size: 20px; /* Размер шрифта */
+}
+
+.button-subtask-container button:hover {
+    background-color: #beaedb;
+}
+

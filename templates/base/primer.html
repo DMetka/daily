@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block head %}
+    
+{% endblock %}
+{% block title %} Авторизация {% endblock %}
+
+{% block body %} 
+    <div class="enter">
+        <h1>Авторизация</h1>
+        <form action="">
+            <label for="first">
+                Логин:
+            </label>
+            <input type="text" id="first" name="first"
+                placeholder="Введите ваш логин" required>
+
+            <label for="password">
+                Пароль:
+            </label>
+            <input type="password" id="password" name="password"
+                placeholder="Введите ваш пароль" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    Авторизоваться
+                </button>
+            </div>
+        </form>
+
+        <p>У вас еще нет аккаунта?
+            <a href="#" style="text-decoration: none;">
+                Зарегистрируйтесь бесплатно
+            </a>
+        </p>
+    </div>
+{% endblock %}

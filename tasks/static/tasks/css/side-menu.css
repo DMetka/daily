@@ -1,0 +1,52 @@
+.side_left_menu{
+    background-color: #BEAEDB;
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.user{
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    color: #3A2D34;
+}
+
+.avatar{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.avatar img{
+    width: auto;
+    height: auto;
+    
+}
+
+.btn_left{
+    background-color: #BEAEDB;
+    border: none;
+    padding: 5px;
+}
+
+.btn_left a{
+    font-weight: 800;
+    color: #3A2D34;
+    font-size: medium;
+    transition: font-weight ease;
+}
+
+.btn_left a:hover{
+    font-weight: 800;
+    
+}
+
+.folders{
+    padding: 5px;
+    color: #3A2D34;
+    font-weight: 800;
+}
