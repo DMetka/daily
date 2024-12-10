@@ -1,4 +1,15 @@
-function get_forgotten_tasks(){
+function get_forgotten_tasks() {
+    const remindersContainer = document.querySelector('.list_of_forgotten_tasks');
+
+    // Если контейнер уже виден, скрыть его и выйти
+    if (remindersContainer.style.display === 'block') {
+        remindersContainer.style.display = 'none';
+        return;
+    }
+
+    // Если контейнер скрыт, показываем его и загружаем задачи
+    remindersContainer.style.display = 'block';
+
     fetch(`/forgotten_task/`)
         .then(response => {
             if (!response.ok) {
@@ -7,8 +18,7 @@ function get_forgotten_tasks(){
             return response.json();
         })
         .then(data => {
-            const remindersContainer = document.querySelector('.list_of_forgotten_tasks');
-            remindersContainer.innerHTML = '';
+            remindersContainer.innerHTML = ''; // Очищаем содержимое
 
             if (data.reminders.length === 0) {
                 remindersContainer.innerHTML = '<p>Нет забытых задач!</p>';
@@ -25,6 +35,6 @@ function get_forgotten_tasks(){
         })
         .catch(error => {
             console.error('Ошибка:', error);
-            document.querySelector('.list_of_forgotten_tasks').innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
+            remindersContainer.innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
         });
 }

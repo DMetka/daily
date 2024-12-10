@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function updateNotificationBadge() {
-    fetch('remind_task')
+    fetch('/remind_task/')
         .then(response => response.json())
         .then(data => {
             const reminders = data.reminders;

@@ -34,3 +34,18 @@
     text-align: left;
     font-size: 16px;
 }
+
+.list_of_tasks .task {
+    border: 1px solid #ccc; /* Цвет и толщина границы */
+    border-radius: 8px; /* Скругленные углы, если нужно */
+    padding: 10px; /* Отступы внутри квадрата */
+    margin-bottom: 10px; /* Расстояние между задачами */
+    background-color: #f9f9f9; /* Цвет фона квадрата */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+    transition: transform 0.2s; /* Анимация при наведении */
+}
+
+.list_of_tasks .task:hover {
+    transform: scale(1.02); /* Увеличение при наведении */
+    border-color: #007bff; /* Цвет границы при наведении */
+}
