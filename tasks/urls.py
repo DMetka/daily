@@ -17,5 +17,6 @@ urlpatterns = [
     path('get_now_four_days', views.get_now_four_days, name='get_now_four_days'),
     path('forgotten_task', views.forgotten_task, name='forgotten_task'),
     path('get_all_folders', views.get_all_folders, name = 'get_all_folders'),
+    path('get_now_week/', views.get_now_week, name='get_now_week'),
 ]
 

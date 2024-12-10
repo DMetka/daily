@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 
 @login_required
@@ -105,14 +105,23 @@ def filter(request):
         return JsonResponse({'tasks': list(tasks)})
 
 
-@login_required
 def get_now_week(request):
-    today = date.today()
-    user = request.user
+    start_date_str = request.GET.get('start_date')
+    if not start_date_str:
+        return JsonResponse({'error': 'start_date is required'}, status=400)
+
+    try:
+        today = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid start_date format'}, status=400)
+
     start_of_week = today - timedelta(days=today.weekday())
     end_of_week = start_of_week + timedelta(days=6)
+
+    user = request.user
     tasks = Tasks.objects.filter(data_add__range=[start_of_week, end_of_week], user=user).values()
-    return JsonResponse({'tasks':  list(tasks)})
+
+    return JsonResponse({'tasks': list(tasks)})
 
 
 @login_required
@@ -187,7 +196,14 @@ def task_completed(request, task_id):
 
 @login_required
 def get_now_four_days(request):
-    today = date.today()
+    start_date_str = request.GET.get('start_date')
+    if not start_date_str:
+        return JsonResponse({'error': 'start_date is required'}, status=400)
+
+    try:
+        today = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid start_date format'}, status=400)
     user = request.user
     offset = int(request.GET.get('offset', 0))
     start = today + timedelta(days=offset)
