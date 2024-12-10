@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
+
 class Folders(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=35)
@@ -16,7 +17,7 @@ class Tasks(models.Model):
     data_add = models.DateField(default=date.today(), blank=True)
     data_complete = models.DateTimeField(null=True, blank=True)
     deadline = models.DateField()
-    folder = models.ForeignKey(Folders, on_delete=models.CASCADE, null=True, blank=True)
+    folder = models.ForeignKey(Folders, on_delete=models.SET_NULL, null=True, blank=True)
     priority = models.IntegerField(default=2)
     is_completed = models.BooleanField(default=False)
     subtask_one = models.CharField(max_length=100, null=True, blank=True)

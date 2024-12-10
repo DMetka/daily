@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 
 @login_required
@@ -41,10 +41,6 @@ def delete_tasks_from_folder(request):
     return JsonResponse({'success': True})
 
 
-'''def main_page(request):
-    return JsonResponse({'success': True})'''
-
-
 def index(request):
     data =  {
         'title' : 'Главная страница',
@@ -52,81 +48,80 @@ def index(request):
     return render(request, 'tasks/index.html', data)
 
 
+def my_tasks(request):
+    data =  {
+        'title' : 'Мои задачи',
+    }
+    return render(request, 'tasks/my_tasks.html', data)
+
+
+def go_back_to_index(request):
+    data =  {
+        'title' : 'Главная страница',
+    }
+    return render(request, 'tasks/index.html', data)
+
+
 @login_required
-def sort_by_priority(request):
+def sort(request):
     user = request.user
-    tasks = Tasks.objects.filter(user=user).order_by('priority').values()
-    return JsonResponse({'tasks':  list(tasks)})
+    sort_by = request.GET.get('sort_by', 'priority')
+    if sort_by == 'priority':
+        tasks = Tasks.objects.filter(user=user).order_by('priority').values()
+        return JsonResponse({'tasks': list(tasks)})
+    if sort_by == 'status':
+        tasks = Tasks.objects.filter(user=user).order_by('is_completed').values()
+        return JsonResponse({'tasks': list(tasks)})
+    if sort_by == 'title':
+        tasks = Tasks.objects.filter(user=user).order_by('title').values()
+        return JsonResponse({'tasks': list(tasks)})
+    if sort_by == 'folders':
+        tasks = Tasks.objects.filter(user=user).order_by('folders').values()
+        return JsonResponse({'tasks': list(tasks)})
+    if sort_by == 'deadline':
+        tasks = Tasks.objects.filter(user=user).order_by('deadline').values()
+        return JsonResponse({'tasks': list(tasks)})
 
 
 @login_required
-def sort_by_status(request):
+def filter(request):
     user = request.user
-    tasks = Tasks.objects.filter(user=user).order_by('is_completed').values()
-    return JsonResponse({'tasks':  list(tasks)})
+    filter_by = request.GET.get('filter_by', '')
+    if filter_by == 'priority':
+        priority = request.GET.get('priority')
+        tasks = Tasks.objects.all().filter(priority=priority, user=user).values()
+        return JsonResponse({'tasks': list(tasks)})
+    if filter_by == 'deadline':
+        deadline = request.GET.get('deadline')
+        tasks = Tasks.objects.all().filter(deadline__startswith=deadline, user=user).values()
+        return JsonResponse({'tasks': list(tasks)})
+    if filter_by == 'folders':
+        folders = request.GET.get('folders')
+        tasks = Tasks.objects.all().filter(folders=folders, user=user).values()
+        return JsonResponse({'tasks': list(tasks)})
+    if filter_by == 'status':
+        is_completed = request.GET.get('is_completed')
+        tasks = Tasks.objects.all().filter(is_completed=is_completed, user=user).values()
+        return JsonResponse({'tasks': list(tasks)})
 
 
-@login_required
-def sort_by_title(request):
-    user = request.user
-    tasks = Tasks.objects.filter(user=user).order_by('title').values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
-def sort_by_folders(request):
-    user = request.user
-    tasks = Tasks.objects.filter(user=user).order_by('folders').values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
-def sort_by_deadline(request):
-    user = request.user
-    tasks = Tasks.objects.filter(user=user).order_by('deadline').values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
-def filter_by_priority(request):
-    user = request.user
-    priority = request.GET.get('priority')
-    tasks = Tasks.objects.all().filter(priority=priority, user=user).values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
-def filter_by_deadline(request):
-    user = request.user
-    deadline = request.GET.get('deadline')
-    tasks = Tasks.objects.all().filter(deadline__startswith=deadline, user=user).values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
-def filter_by_folders(request):
-    user = request.user
-    folders = request.GET.get('folders')
-    tasks = Tasks.objects.all().filter(folders=folders, user=user).values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
-def filter_by_status(request):
-    user = request.user
-    is_completed = request.GET.get('is_completed')
-    tasks = Tasks.objects.all().filter(is_completed=is_completed, user=user).values()
-    return JsonResponse({'tasks':  list(tasks)})
-
-
-@login_required
 def get_now_week(request):
-    today = date.today()
-    user = request.user
+    start_date_str = request.GET.get('start_date')
+    if not start_date_str:
+        return JsonResponse({'error': 'start_date is required'}, status=400)
+
+    try:
+        today = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid start_date format'}, status=400)
+
     start_of_week = today - timedelta(days=today.weekday())
     end_of_week = start_of_week + timedelta(days=6)
+
+    user = request.user
     tasks = Tasks.objects.filter(data_add__range=[start_of_week, end_of_week], user=user).values()
-    return JsonResponse({'tasks':  list(tasks)})
+
+    return JsonResponse({'tasks': list(tasks)})
 
 
 @login_required
@@ -155,18 +150,15 @@ def add_task(request):
             title = data.get('title')
             full_text = data.get('full_text')
             deadline = data.get('deadline')
-            folder = data.get('folder')
-            subtask_one = data.get('subtask_one')
-            subtask_two = data.get('subtask_two')
-            subtask_three = data.get('subtask_three')
-            subtask_four = data.get('subtask_four')
+            folder_id = data.get('folder')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
 
         except json.JSONDecodeError:
             return JsonResponse({'message': 'Invalid JSON format'}, status=400)
 
-        #if not title and not full_text and not deadline and not folder and not priority:
+        folder_instance = get_object_or_404(Folders, pk=folder_id) if folder_id else None
+
         if not title and not full_text and not deadline and not priority:
             return JsonResponse({'message': 'No find such task'}, status=400)
 
@@ -183,14 +175,10 @@ def add_task(request):
             full_text=full_text,
             data_create=data_create,
             deadline=deadline,
-            folder=folder,
+            folder=folder_instance,
             priority=priority,
             is_completed=is_completed,
-            data_complete=data_complete,
-            subtask_one=subtask_one,
-            subtask_two=subtask_two,
-            subtask_three=subtask_three,
-            subtask_four=subtask_four
+            data_complete=data_complete
         )
 
         return JsonResponse({'message': 'Good job'}, status=201)
@@ -208,10 +196,22 @@ def task_completed(request, task_id):
 
 @login_required
 def get_now_four_days(request):
-    today = date.today()
+    start_date_str = request.GET.get('start_date')
+    if not start_date_str:
+        return JsonResponse({'error': 'start_date is required'}, status=400)
+
+    try:
+        today = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid start_date format'}, status=400)
     user = request.user
     offset = int(request.GET.get('offset', 0))
     start = today + timedelta(days=offset)
     finish = start + timedelta(days=3)
     tasks = Tasks.objects.filter(data_add__range=[start, finish], user=user).values()
     return JsonResponse({'tasks':  list(tasks)})
+
+@login_required
+def get_all_folders(request):
+    folders = Folders.objects.filter(user=request.user).values()
+    return JsonResponse({'folders': list(folders)})

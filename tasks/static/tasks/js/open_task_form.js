@@ -4,14 +4,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const SaveTask = document.getElementById("SaveTask");
     const titleInput = document.getElementById("taskName");
     const fullTextInput = document.getElementById("taskFullText");
-    const deadlineInput = document.getElementById("taskDate"); // Поле для даты дедлайна
-    const folderInput = document.getElementById("taskFolder"); // Поле для папки
-    const priorityInput = document.getElementById("taskPriority"); // Поле для приоритета
-    const completedInput = document.getElementById("taskCompleted"); // Выполнена ли задача
-
+    const deadlineInput = document.getElementById("taskDate");
+    const folderInput = document.getElementById("taskFolder");
+    const priorityInput = document.getElementById("taskPriority");
+    const completedInput = document.getElementById("taskCompleted");
+    const chooseFolderBtn = document.getElementById("chooseFolderBtn");
+    const foldersList = document.getElementById("foldersList");
+    console.log("folderInput элемент:", folderInput);
     // Функция для открытия формы
-    function openForm() {
+    function openForm(date) {
         TaskForm.style.display = 'flex';
+         selectedDate = date; // Сохраняем выбранную дату
         requestAnimationFrame(() => {
             TaskForm.style.transform = 'translateX(0)';
         });
@@ -25,10 +28,61 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 300);
     }
 
+    chooseFolderBtn.addEventListener("click", function() {
+        if (foldersList.style.display === "none") {
+            foldersList.style.display = "block";
+            loadFolders();
+        } else {
+            foldersList.style.display = "none";
+        }
+    });
+
+    // Функция для загрузки списка папок
+    function loadFolders() {
+    fetch('get_all_folders', {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            // Очистка <select> перед добавлением новых опций
+            folderInput.innerHTML = '<option value="">Выберите папку</option>';
+
+            // Добавление папок в <select>
+            data.folders.forEach((folder) => {
+                const option = document.createElement("option");
+                option.value = folder.id;
+                option.textContent = folder.title;
+                folderInput.appendChild(option);
+            });
+
+            // Заполнение списка папок (для выбора из dropdown)
+            foldersList.innerHTML = "";
+            data.folders.forEach((folder) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = folder.title;
+                listItem.dataset.id = folder.id;
+                listItem.addEventListener("click", function () {
+                    folderInput.value = folder.id; // Устанавливаем значение
+                    chooseFolderBtn.textContent = `Выбрана папка: ${folder.title}`;
+                    foldersList.style.display = "none";
+                });
+                foldersList.appendChild(listItem);
+            });
+        })
+        .catch((error) => {
+            console.error("Ошибка загрузки папок:", error);
+        });
+    }
+
     // Обработчик события для кнопок "Добавить задачу"
-    addTaskButtons.forEach(button => {
+    document.querySelectorAll(".add-task-btn").forEach(button => {
         button.addEventListener("click", function() {
-            openForm();
+            const dateElement = this.closest('.day').querySelector('.date');
+            const date = dateElement.getAttribute('data-day'); // Получаем дату из атрибута
+            openForm(date); // Открываем форму с выбранной датой
         });
     });
 
@@ -39,14 +93,14 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Пожалуйста, заполните все обязательные поля.");
             return; // Выход из функции, если поля не заполнены
         }
-
         const taskData = {
             title: titleInput.value,
             full_text: fullTextInput.value,
             data_create: new Date().toISOString(),
             data_complete: null,
+            data_add: selectedDate, // Используем выбранную дату
             deadline: deadlineInput.value,
-            folder: folderInput.value, // ID папки
+            folder: folderInput.value, // Папка будет установлена через поле ввода
             priority: parseInt(priorityInput.value) || 2,
             is_completed: completedInput.checked // Используйте checked для checkbox
         };

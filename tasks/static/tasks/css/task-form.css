@@ -140,3 +140,52 @@
     background-color: #beaedb;
 }
 
+/* Стиль для кнопки выбора */
+#chooseFolderBtn {
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#chooseFolderBtn:hover {
+    background-color: #483d8b;
+}
+
+/* Стиль для списка */
+#foldersList {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    margin: 5px 0 0;
+    z-index: 1000;
+    width: 200px;
+}
+
+/* Стиль для каждого элемента списка */
+#foldersList li {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+#foldersList li:hover {
+    background-color: #f0f0f0;
+    color: #483d8b;
+}
+
+/* Дополнительные стили */
+#foldersList li:active {
+    background-color: #dcdcdc;
+    color: #483d8b;
+}
