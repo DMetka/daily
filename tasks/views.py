@@ -215,5 +215,3 @@ def get_now_four_days(request):
     finish = start + timedelta(days=3)
     tasks = Tasks.objects.filter(data_add__range=[start, finish], user=user).values()
     return JsonResponse({'tasks':  list(tasks)})
-
-

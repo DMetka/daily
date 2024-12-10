@@ -1,0 +1,121 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+</style>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Ежедневник</title>
+  <link rel="stylesheet" href="../../static/tasks/css/main.css">
+  <link rel="stylesheet" href="../../static/tasks/css/task-form.css">
+  <link rel="stylesheet" href="../../static/tasks/css/side-menu.css">
+  <link rel="stylesheet" href="../../static/tasks/css/week.css">
+</head>
+<body>
+    <div class="main-area"><!--Вся страница-->
+        <div class="side_left_menu"><!--Боковое меню-->
+            <div class = "user"><!--Добавляется картинка и имя (еще буду думать как сюда забивать данные с авторизации)-->
+
+                <h3>Моё имя</h3><!--По идее сюда будет добавляться имя пользователя с авторизации-->
+            </div>
+            <button class = "btn_left"><a href="#">Мои задачи</a></button><!--Кнопка, ведет к моим задачам-->
+            <div class="folders">
+                <p>Папки</p>
+                <ul><!--Здесь должны отображаться папки, пока не доделано--></ul>
+            </div>
+        </div>
+        <div class = "task_area"><!--Это поле для работы с задачами(страница без бокового меню)-->
+            <div class ="search-container"><!--Это поле поиска задач и их фильтрация-->
+                <input type="text" placeholder="Найти задачу..." class="search-input"><!--Это поле для ввода-->
+                <div class="filter-container">
+                    <label for="filterSelect">Фильтр:</label><!--Это просто надпись-->
+                    <select id="filterSelect" class="filter-select"><!--А это уже выпадающий список для выбора фильтра-->
+                        <option value="">Выберите фильтр</option>
+                        <option value="status">Статус</option>
+                        <option value="priority">Приоритет</option>
+                        <option value="tag">Тег</option>
+                    </select>
+                </div>
+                <!-- Иконка колокольчика -->
+                <div class="notification-container">
+                    <img src="../../static/tasks/img/bell-alarm.svg" alt="Уведомления" class="notification-icon" onclick="toggleNotifications()">
+                    <span id="notificationBadge" class="notification-badge" style="display: none;"></span>
+                    <div id="notificationPopup" class="notification-popup" style="display: none;">
+                        <!-- Здесь будут отображаться напоминания -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="week-view">
+                <h2>Задачи</h2><!--Не знаю как правильно это назвать -->
+                <div class = "calendar-container">
+                    <button id="prevDays" onclick="changeDays(-4)">&#9664;</button> <!-- Левая стрелка -->
+                    <div class="calendar" id="calendar">
+                        <div class="day" id="day1">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                        <div class="day" id="day2">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                        <div class="day" id="day3">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                        <div class="day" id="day4">
+                            <p class="day-name"></p>
+                            <p class="date"></p>
+                            <button class="add-task-btn" onclick="openForm()">Добавить задачу</button>
+                        </div>
+                    </div>
+                    <button id="nextDays" onclick="changeDays(4)">&#9654;</button> <!-- Правая стрелка -->
+                </div>
+            </div>
+            <div class="task">
+                <div class="hidden" id="TaskForm"> <!--  Форма для добавления задачи -->
+                    {% csrf_token %}
+                    <div class="task-status">
+                        <input type="checkbox" id="taskCompleted"><!--Это галочка, чтобы отмечать выполнена задача или нет-->
+                        <label for="taskCompleted">Выполнено</label>
+                        <button class="start-timer">Старт</button><!--Это кнопка для начала отсчета времени выполнения задачи-->
+                    </div>
+                    <input type="text" placeholder="Название задачи" id="taskName"><!--Это поле для ввода названия задачи-->
+                    <p>Крайний срок выполнения задачи</p>
+                    <input type="date" id="taskDate"><!--Это поле для ввода даты-->
+                    <div class="priority">
+                    <p class="priority-text"> Приоритет задачи</p>
+                    <select id="taskPriority" class="task-priority"><!--Это список для выбора приоритета-->
+                        <option value=3>Низкий</option>
+                        <option value=2>Средний</option>
+                        <option value=1>Высокий</option>
+                    </select>
+                    </div>
+                    <textarea placeholder="Заметка" id = "taskFullText"></textarea><!--Это поле для заметки-->
+                    <div class="subtask-container">
+                        <div class="subtask">
+                            <input type="text" placeholder="Подзадача">
+                        </div>
+                    </div>
+                    <div class="button-subtask-container">
+                        <button id="addSubtask">+</button> <!-- Кнопка для добавления подзадачи -->
+                        <button id="removeSubtask">-</button> <!-- Кнопка для удаления последней подзадачи -->
+                    </div>
+
+                    <div class = "save-btn-container">
+                        <button id = "SaveTask">Сохранить</button><!--Это кнопка для сохранения изменений задачи-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="../../static/tasks/js/open_task_form.js"></script>
+<script src="../../static/tasks/js/subtask.js"></script>
+<script src="../../static/tasks/js/calendar.js"></script>
+<script src="../../static/tasks/js/remind_task.js"></script>
+</body>
+</html>
