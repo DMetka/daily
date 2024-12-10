@@ -21,6 +21,5 @@ urlpatterns = [
     path('task_completed/<int:task_id>/', views.task_completed, name='task_completed'),
     path('get_now_four_days', views.get_now_four_days, name='get_now_four_days'),
     path('forgotten_task', views.forgotten_task, name='forgotten_task'),
-    path('test/', views.test)
 ]
 

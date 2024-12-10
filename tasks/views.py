@@ -7,9 +7,6 @@ from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta
 
 
-def test(request):
-    return render(request, 'base/primer.html')
-
 @login_required
 def delete_task(request, task_id):
     user = request.user
