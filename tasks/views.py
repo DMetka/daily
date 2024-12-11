@@ -68,6 +68,12 @@ def my_tasks(request):
     }
     return render(request, 'tasks/my_tasks.html', data)
 
+def my_folders(request):
+    data =  {
+        'title' : 'Мои папки',
+    }
+    return render(request, 'tasks/my_folders.html', data)
+
 
 def go_back_to_index(request):
     data =  {

@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Ежедневник{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'tasks/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/task-form.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/side-menu.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/week.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/my_folders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-area"><!--Вся страница-->
+    <div class="side_left_menu"><!--Боковое меню-->
+        <div class = "user">
+
+            <h3>Профиль</h3>
+        </div>
+        <button class = "btn_left"><a href="{% url 'my_tasks' %}">Мои задачи</a></button>
+         <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button>
+    </div>
+    <div class="area">
+
+
+
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'tasks/js/open_task_form.js' %}"></script>
+<script src="{% static 'tasks/js/subtask.js' %}"></script>
+<script src="{% static 'tasks/js/remind_task.js' %}"></script>
+<script src="{% static 'tasks/js/folders_view.js' %}"></script>
+
+{% endblock %}

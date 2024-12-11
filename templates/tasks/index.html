@@ -17,10 +17,7 @@
             <h3>Профиль</h3>
         </div>
         <button class = "btn_left"><a href="{% url 'my_tasks' %}">Мои задачи</a></button>
-        <div class="folders">
-            <p>Папки</p>
-            <ul><!--Здесь должны отображаться папки, пока не доделано--></ul>
-        </div>
+        <button class="btn_left"><a href="{% url 'my_folders' %}">Мои папки</a></button> <!-- Измененная кнопка -->
     </div>
     <div class = "task_area">
         <div class ="search-container">
@@ -115,6 +112,7 @@
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
+<script src="{% static 'tasks/js/folders_view.js' %}"></script>
 
 
 {% endblock %}
