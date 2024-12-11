@@ -22,18 +22,31 @@
          <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button>
     </div>
     <div class="area">
+    <h2>Мои папки</h2>
+    <button id="create-folder-button">Создать папку</button>
+    <input type="text" id="folder-title" placeholder="Введите название папки" />
+    <div id="folder-message"></div> <!-- Для отображения сообщений -->
 
 
-
+        <div class="folders">
+            <ul id="folder-list">
+                {% for folder in folders %}
+                <li>
+                    <button onclick="loadFolderContents({{ folder.id }})">{{ folder.title }}</button>
+                    <div id="folder-{{ folder.id }}-contents" class="folder-contents" style="display:none;">
+                        <!-- Содержимое папки будет загружено сюда -->
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 
 {% block scripts %}
-<script src="{% static 'tasks/js/open_task_form.js' %}"></script>
-<script src="{% static 'tasks/js/subtask.js' %}"></script>
-<script src="{% static 'tasks/js/remind_task.js' %}"></script>
+
 <script src="{% static 'tasks/js/folders_view.js' %}"></script>
 
 {% endblock %}

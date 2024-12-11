@@ -245,6 +245,39 @@ def get_all_folders(request):
     folders = Folders.objects.filter(user=request.user).values()
     return JsonResponse({'folders': list(folders)})
 
+@login_required
+def add_folder(request):
+    if request.method == 'POST':
+        user = request.user
+        if not User.objects.filter(pk=user.id).exists():
+            return JsonResponse({'message': 'No find such user'}, status=400)
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+        except json.JSONDecodeError:
+            return JsonResponse({'message': 'Invalid JSON format'}, status=400)
+        if Tasks.objects.filter(user=user, title=title).exists():
+            return JsonResponse({'message': 'Folder with this name already exists'}, status=400)
+        Tasks.objects.create(
+            user=user,
+            title=title,
+        )
+        return JsonResponse({'message': 'Good job'}, status=201)
+    else:
+        return JsonResponse({'message': 'This method false'}, status=400)
+
+@login_required
+def get_folder_contents(request, folder_id):
+    tasks = Tasks.objects.filter(folder_id=folder_id).values()  # Получаем задачи для данной папки
+    return JsonResponse({'tasks': list(tasks)})
+
+@login_required
+def get_my_folders(request):
+    print(f":User  {request.user}")  # Вывод информации о пользователе
+    folders = Folders.objects.filter(user=request.user)
+    print(f"Folders: {folders}")  # Вывод списка папок
+    return render(request, 'tasks/my_folders.html', {'folders': folders})
+
 
 def task_date(request):
     data = json.loads(request.body)
