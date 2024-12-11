@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+{% block title %} Авторизация {% endblock %}
+
+{% block content %}
+    <div class="enter">
+        <h1>Авторизация</h1>
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.username }}
+            {{ form.password }}
+
+            {% if form.non_field_errors %}
+                    <div class="error-container">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <button type="submit">
+                Войти
+            </button>
+        </form>
+
+        <div class="text">
+            <p>У вас еще нет аккаунта?</p>
+            <a href="{% url 'Registration' %}" style="text-decoration: none;">
+                Зарегистрируйтесь бесплатно
+            </a>
+        </div>
+    </div>
+{% endblock %}

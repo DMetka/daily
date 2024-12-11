@@ -35,9 +35,10 @@
         <div class="list_of_tasks">
             <!--Автоматическое добавление задач-->
         </div>
-        <button id="forgotten" onclick="get_forgotten_tasks">&#9827;</button>
-    </div>
+        <div class="list_of_forgotten_tasks" style="display: none;"></div>
+            <button id="forgotten" onclick="get_forgotten_tasks()">&#9827;</button>
 
+    </div>
 </div>
 {% endblock %}
 
@@ -48,4 +49,5 @@
 <script src="{% static 'tasks/js/calendar_for_week.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
 <script src="{% static 'tasks/js/list_of_tasks.js' %}"></script>
+<script src="{% static 'tasks/js/forgotten_tasks.js' %}"></script>
 {% endblock %}

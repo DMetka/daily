@@ -1,36 +1,91 @@
 .main-area {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Начало страницы по вертикали */
-    height: auto; /* Высота подстраивается под содержимое */
+    align-items: flex-start;
+    height: auto;
 }
+
 
 .my_task_area {
-    text-align: center; /* Текст внутри блока тоже центрируется */
+    text-align: center;
     padding: 20px;
-    background-color: #f9f9f9; /* Светлый фон для визуального выделения */
-    border-radius: 10px; /* Закругленные углы */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень для эстетики */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .my_task_area button {
-    background-color: #f0f0f0; /* Светло-серый фон */
+    background-color: #f0f0f0;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin: 0 100px; /* Добавляем отступы слева и справа */
+    margin: 0 100px;
 }
+
 
 .my_task_area button:hover {
-    background-color: #dcdcdc; /* Темнее при наведении */
+    background-color: #dcdcdc;
 }
 
+
 .list_of_tasks {
-    padding: 10px 20px;
-    background-color: transparent;
-    text-align: left;
-    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Отступ между напоминаниями */
+    padding: 20px;
+    background-color: #f9f9f9; /* Фон контейнера */
+    border: 1px solid #ddd; /* Рамка вокруг контейнера */
+    border-radius: 10px; /* Закругленные углы */
+    max-width: 400px; /* Ограничение ширины */
+    margin: 0 auto; /* Центрирование */
+}
+
+
+.list_of_tasks .task {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+
+.list_of_tasks .task:hover {
+    transform: scale(1.02);
+    border-color: #007bff;
+}
+
+
+.list_of_tasks div {
+    padding: 15px;
+    background-color: #ffffff; /* Белый фон */
+    border: 1px solid #ccc; /* Светлая рамка */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    transition: transform 0.2s, background-color 0.2s; /* Плавный переход */
+}
+
+
+.list_of_task h3{
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+
+.list_of_task small {
+    font-size: 14px;
+    color: #777;
+}
+
+
+.list_of_task div:hover {
+    transform: translateY(-3px);
+    background-color: #f0f8ff;
 }
