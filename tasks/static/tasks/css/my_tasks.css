@@ -43,7 +43,7 @@
     gap: 10px;
     padding: 20px;
     background-color: transparent;
-    width: 700px;
+    width: 668px;
     margin: 0 auto;
 }
 
@@ -55,7 +55,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, background-color 0.2s;
-    width: 700px;
+    width: 668px;
     height: 100px;
 }
 
@@ -93,6 +93,32 @@
     transition: background-color 0.3s;
 }
 
+
 #forgotten:hover {
     background-color: #75619d;
+}
+
+
+#forgotten-container {
+    position: fixed;
+    top: 80px; /* Расположить под кнопкой (20px кнопка + отступ 40px) */
+    right: 20px; /* Совместить с правым краем кнопки */
+    width: 300px; /* Задайте подходящую ширину */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    max-height: 300px; /* Ограничение по высоте */
+    overflow-y: auto; /* Добавить прокрутку при переполнении */
+    z-index: 9; /* Чтобы быть ниже кнопки */
+}
+
+.forgotten-task {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

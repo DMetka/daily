@@ -19,14 +19,17 @@ function get_forgotten_tasks() {
             remindersContainer.innerHTML = '';
 
             if (data.reminders.length === 0) {
+                const remindersContainer = document.getElementById('forgotten-container');
                 remindersContainer.innerHTML = '<p>Нет забытых задач!</p>';
             } else {
                 data.reminders.forEach(task => {
                     const taskElement = document.createElement('div');
+                    taskElement.classList.add('forgotten-task');
                     taskElement.innerHTML = `
                         <h3 class="forgottens">${task.title}</h3>
-                        <small class="forgottens">Дедлайн истек!: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
+                        <small class="forgottens">Дедлайн истек: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
                     `;
+                    const remindersContainer = document.getElementById('forgotten-container');
                     remindersContainer.appendChild(taskElement);
                 });
             }
@@ -35,4 +38,8 @@ function get_forgotten_tasks() {
             console.error('Ошибка:', error);
             remindersContainer.innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
         });
+
+    setTimeout(function() {
+      popup.remove();
+    }, 5000);
 }

@@ -215,3 +215,31 @@ def get_now_four_days(request):
 def get_all_folders(request):
     folders = Folders.objects.filter(user=request.user).values()
     return JsonResponse({'folders': list(folders)})
+
+
+@login_required
+def add_folder(request):
+    if request.method == 'POST':
+        user = request.user
+
+        if not User.objects.filter(pk=user.id).exists():
+            return JsonResponse({'message': 'No find such user'}, status=400)
+
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+        except json.JSONDecodeError:
+            return JsonResponse({'message': 'Invalid JSON format'}, status=400)
+
+        if Tasks.objects.filter(user=user, title=title).exists():
+            return JsonResponse({'message': 'Folder with this name already exists'}, status=400)
+
+        Tasks.objects.create(
+            user=user,
+            title=title,
+        )
+
+        return JsonResponse({'message': 'Good job'}, status=201)
+
+    else:
+        return JsonResponse({'message': 'This method false'}, status=400)
