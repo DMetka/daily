@@ -19,7 +19,7 @@ function get_forgotten_tasks() {
         .then(data => {
 
             if (data.reminders.length === 0) {
-                const forgottenContainer = document.getElementById('forgotten-container');
+                //const forgottenContainer = document.getElementById('forgotten-container');
                 forgottenContainer.innerHTML = '<p>Нет забытых задач!</p>';
             } else {
                 data.reminders.forEach(task => {
@@ -29,6 +29,9 @@ function get_forgotten_tasks() {
                         <h3 class="forgottens">${task.title}</h3>
                         <small class="forgottens">Дедлайн истек: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
                     `;
+                    taskElement.addEventListener('click', () => {
+                        alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
+                    });
                     forgottenContainer.appendChild(taskElement);
                 });
             }
