@@ -1,15 +1,15 @@
 function loadTasks() {
     const startOfWeek = new Date(currentDate);
-    startOfWeek.setDate(startOfWeek.getDate() - (startOfWeek.getDay() || 7) + 1); // Начало недели (понедельник)
+    startOfWeek.setDate(startOfWeek.getDate() - (startOfWeek.getDay() || 7) + 1);
 
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6); // Конец недели (воскресенье)
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
 
-    // Форматируем даты для передачи на сервер
+
     const startDate = startOfWeek.toISOString().split('T')[0];
     const endDate = endOfWeek.toISOString().split('T')[0];
 
-    // Отправляем запрос с параметрами
+
     fetch(`/get_now_week/?start_date=${startDate}`)
         .then(response => response.json())
         .then(data => {
@@ -36,12 +36,12 @@ function loadTasks() {
 
 
 function changeDays(direction) {
-    currentDate.setDate(currentDate.getDate() + direction); // Обновляем текущую дату
-    updateWeekRange(); // Обновляем диапазон недели
-    loadTasks(); // Загружаем задачи для обновлённой недели
+    currentDate.setDate(currentDate.getDate() + direction);
+    updateWeekRange();
+    loadTasks();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateWeekRange(); // Инициализируем диапазон недели
-    loadTasks(); // Загружаем задачи при загрузке страницы
+    updateWeekRange();
+    loadTasks();
 });

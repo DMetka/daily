@@ -1,13 +1,11 @@
 function get_forgotten_tasks() {
     const remindersContainer = document.querySelector('.list_of_forgotten_tasks');
 
-    // Если контейнер уже виден, скрыть его и выйти
     if (remindersContainer.style.display === 'block') {
         remindersContainer.style.display = 'none';
         return;
     }
 
-    // Если контейнер скрыт, показываем его и загружаем задачи
     remindersContainer.style.display = 'block';
 
     fetch(`/forgotten_task/`)
@@ -18,7 +16,7 @@ function get_forgotten_tasks() {
             return response.json();
         })
         .then(data => {
-            remindersContainer.innerHTML = ''; // Очищаем содержимое
+            remindersContainer.innerHTML = '';
 
             if (data.reminders.length === 0) {
                 remindersContainer.innerHTML = '<p>Нет забытых задач!</p>';
@@ -26,8 +24,8 @@ function get_forgotten_tasks() {
                 data.reminders.forEach(task => {
                     const taskElement = document.createElement('div');
                     taskElement.innerHTML = `
-                        <h3>${task.title}</h3>
-                        <small>Дедлайн истек!: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
+                        <h3 class="forgottens">${task.title}</h3>
+                        <small class="forgottens">Дедлайн истек!: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
                     `;
                     remindersContainer.appendChild(taskElement);
                 });
