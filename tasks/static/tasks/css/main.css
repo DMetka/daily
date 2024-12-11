@@ -31,6 +31,17 @@ a{
     font-family: onest;
 }
 
+.search-button{
+    position: relative;
+    margin-left: 10px;
+    border:  1px solid #beaedb;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-family: onest;
+    padding: 10px;
+}
+
 .filter-container {
     position: relative; /* Устанавливаем позицию для контейнера фильтра */
     margin-left: 10px;
