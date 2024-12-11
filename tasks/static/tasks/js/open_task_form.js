@@ -11,13 +11,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
     console.log("folderInput элемент:", folderInput);
+    let currentTask = null;
+
     // Функция для открытия формы
     function openForm(date) {
         TaskForm.style.display = 'flex';
-         selectedDate = date; // Сохраняем выбранную дату
+        selectedDate = date; // Сохраняем выбранную дату
         requestAnimationFrame(() => {
             TaskForm.style.transform = 'translateX(0)';
         });
+
     }
 
     // Функция для закрытия формы
@@ -77,14 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Обработчик события для кнопок "Добавить задачу"
-    document.querySelectorAll(".add-task-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            const dateElement = this.closest('.day').querySelector('.date');
-            const date = dateElement.getAttribute('data-day'); // Получаем дату из атрибута
-            openForm(date); // Открываем форму с выбранной датой
-        });
-    });
+
 
     // Обработчик события для кнопки "Сохранить"
     SaveTask.addEventListener("click", function() {

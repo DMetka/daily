@@ -153,6 +153,8 @@ def add_task(request):
             folder_id = data.get('folder')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
+            data_add = data.get('data_add')
+
 
         except json.JSONDecodeError:
             return JsonResponse({'message': 'Invalid JSON format'}, status=400)
@@ -178,7 +180,9 @@ def add_task(request):
             folder=folder_instance,
             priority=priority,
             is_completed=is_completed,
-            data_complete=data_complete
+            data_complete=data_complete,
+            data_add =data_add,
+
         )
 
         return JsonResponse({'message': 'Good job'}, status=201)
@@ -215,3 +219,28 @@ def get_now_four_days(request):
 def get_all_folders(request):
     folders = Folders.objects.filter(user=request.user).values()
     return JsonResponse({'folders': list(folders)})
+
+def get_task(request, task_id):
+    if request.method == 'GET':
+        # Получаем задачу по названию
+        task = get_object_or_404(Tasks, title=task_id)
+
+        # Формируем данные задачи для ответа
+        task_data = {
+            'id': task.id,
+            'title': task.title,
+            'full_text': task.full_text,
+            'deadline': task.deadline.isoformat() if task.deadline else None,  # Крайний срок выполнения задачи
+            'folder': task.folder.id if task.folder else None,  # Если папка есть, возвращаем ее ID
+            'priority': task.priority,
+            'is_completed': task.is_completed,
+            'data_create': task.data_create.isoformat(),  # Дата создания
+            'data_complete': task.data_complete.isoformat() if task.data_complete else None,  # Дата завершения
+            'data_add': task.data_add.isoformat() if task.data_add else None,  # Дата добавления
+            'user': task.user.id,  # ID пользователя задачи
+        }
+
+        return JsonResponse({'task': task_data}, status=200)
+
+    else:
+        return JsonResponse({'message': 'This method is not allowed'}, status=405)
