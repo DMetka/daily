@@ -21,7 +21,10 @@
     </div>
     <div class = "task_area">
         <div class ="search-container">
-            <input type="text" placeholder="Найти задачу..." class="search-input">
+            <input type="text" placeholder="Найти задачу..." class="search-input" id="search-input">
+            <button id="search-button">Поиск</button>
+            <div id="search-results"></div> <!--пока найденные задачи выводятся сюда, сейчас придумаю как и куда их выводить-->
+
             <div class="filter-container">
                 <label for="filterSelect">Фильтр:</label>
                 <select id="filterSelect" class="filter-select">
@@ -112,7 +115,7 @@
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
-<script src="{% static 'tasks/js/folders_view.js' %}"></script>
+<script src="{% static 'tasks/js/search_tasks.js' %}"></script>
 
 
 {% endblock %}

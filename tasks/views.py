@@ -310,3 +310,19 @@ def task_date(request):
             })
 
     return JsonResponse({'tasks': date_range})
+
+@login_required
+def search_tasks(request):
+    if request.method == 'GET':
+        query = request.GET.get('q', '')  # Получаем поисковый запрос из параметров GET
+        if query:
+            # Фильтруем задачи по заголовку, игнорируя регистр
+            tasks = Tasks.objects.filter(title__icontains=query, user=request.user)
+        else:
+            tasks = Tasks.objects.none()  # Если нет запроса, возвращаем пустой QuerySet
+
+        # Формируем список задач для отправки в ответе
+        tasks_list = [{'id': task.id, 'title': task.title, 'full_text': task.full_text} for task in tasks]
+        return JsonResponse({'tasks': tasks_list})
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
