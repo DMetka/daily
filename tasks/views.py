@@ -322,7 +322,7 @@ def search_tasks(request):
             tasks = Tasks.objects.none()  # Если нет запроса, возвращаем пустой QuerySet
 
         # Формируем список задач для отправки в ответе
-        tasks_list = [{'id': task.id, 'title': task.title, 'full_text': task.full_text} for task in tasks]
+        tasks_list = [{'id': task.id, 'title': task.title, 'full_text': task.full_text, 'data_add': task.data_add} for task in tasks]
         return JsonResponse({'tasks': tasks_list})
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
