@@ -1,12 +1,13 @@
 function get_forgotten_tasks() {
-    const remindersContainer = document.querySelector('.list_of_forgotten_tasks');
+    const forgottenContainer = document.querySelector('.list_of_forgotten_tasks');
 
-    if (remindersContainer.style.display === 'block') {
-        remindersContainer.style.display = 'none';
+    if (forgottenContainer.style.display === 'block') {
+        forgottenContainer.style.display = 'none';
         return;
     }
 
-    remindersContainer.style.display = 'block';
+    forgottenContainer.style.display = 'block';
+    forgottenContainer.innerHTML = '';
 
     fetch(`/forgotten_task/`)
         .then(response => {
@@ -16,11 +17,10 @@ function get_forgotten_tasks() {
             return response.json();
         })
         .then(data => {
-            remindersContainer.innerHTML = '';
 
             if (data.reminders.length === 0) {
-                const remindersContainer = document.getElementById('forgotten-container');
-                remindersContainer.innerHTML = '<p>Нет забытых задач!</p>';
+                const forgottenContainer = document.getElementById('forgotten-container');
+                forgottenContainer.innerHTML = '<p>Нет забытых задач!</p>';
             } else {
                 data.reminders.forEach(task => {
                     const taskElement = document.createElement('div');
@@ -29,17 +29,15 @@ function get_forgotten_tasks() {
                         <h3 class="forgottens">${task.title}</h3>
                         <small class="forgottens">Дедлайн истек: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
                     `;
-                    const remindersContainer = document.getElementById('forgotten-container');
-                    remindersContainer.appendChild(taskElement);
+                    forgottenContainer.appendChild(taskElement);
                 });
             }
+            setTimeout(function() {
+                forgottenContainer.style.display = 'none'; // Скрываем контейнер
+            }, 10000);
         })
         .catch(error => {
             console.error('Ошибка:', error);
-            remindersContainer.innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
+            forgottenContainer.innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
         });
-
-    setTimeout(function() {
-     remindersContainer.style.display = 'none';
-    }, 5000);
 }
