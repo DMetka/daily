@@ -18,5 +18,6 @@ urlpatterns = [
     path('forgotten_task/', views.forgotten_task, name='forgotten_task'),
     path('get_all_folders/', views.get_all_folders, name = 'get_all_folders'),
     path('get_now_week/', views.get_now_week, name='get_now_week'),
+    path('task_date/', views.task_date)
 ]
 

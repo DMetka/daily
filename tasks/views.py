@@ -1,4 +1,5 @@
 import json
+from collections import OrderedDict
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from .models import *
@@ -42,10 +43,23 @@ def delete_tasks_from_folder(request):
 
 
 def index(request):
-    data =  {
-        'title' : 'Главная страница',
-    }
-    return render(request, 'tasks/index.html', data)
+    data_start = timezone.now()
+    data_end = data_start + timedelta(days=3)
+
+    tasks = Tasks.objects.filter(data_add__range=(data_start, data_end))
+
+    date_range = OrderedDict()
+    current_date = data_start.date()
+    while current_date <= data_end.date():
+        date_range[current_date] = []
+        current_date += timedelta(days=1)
+
+    for task in tasks:
+        task_date = task.data_add
+        if task_date in date_range:
+            date_range[task_date].append(task)
+
+    return render(request, 'tasks/index.html', {'grouped_tasks': date_range})
 
 
 def my_tasks(request):
@@ -143,26 +157,34 @@ def add_task(request):
         user = request.user
 
         if not User.objects.filter(pk=user.id).exists():
-            return JsonResponse({'message': 'No find such user'}, status=400)
+            return JsonResponse({'message': 'No find such user'}, status=401)
 
         try:
             data = json.loads(request.body)
             title = data.get('title')
             full_text = data.get('full_text')
             deadline = data.get('deadline')
+            data_add = data.get('data_add')
             folder_id = data.get('folder')
             priority = data.get('priority')
             is_completed = data.get('is_completed', False)
 
         except json.JSONDecodeError:
-            return JsonResponse({'message': 'Invalid JSON format'}, status=400)
+            return JsonResponse({'message': 'Invalid JSON format'}, status=402)
 
         folder_instance = get_object_or_404(Folders, pk=folder_id) if folder_id else None
 
         if not title and not full_text and not deadline and not priority:
-            return JsonResponse({'message': 'No find such task'}, status=400)
+            return JsonResponse({'message': 'No find such task'}, status=403)
 
-        if is_completed == True:
+        try:
+            date_obj = datetime.strptime(data_add, "%d.%m.%Y")
+            data_add = date_obj.strftime("%Y-%m-%d")
+        except ValueError:
+            return JsonResponse({'message': 'Неверный формат даты. Дата должна быть в формате DD.MM.YYYY.'}, status=403)
+
+
+        if is_completed:
             data_complete = timezone.now()
         else:
             data_complete = None
@@ -175,6 +197,7 @@ def add_task(request):
             full_text=full_text,
             data_create=data_create,
             deadline=deadline,
+            data_add=data_add,
             folder=folder_instance,
             priority=priority,
             is_completed=is_completed,
@@ -184,7 +207,7 @@ def add_task(request):
         return JsonResponse({'message': 'Good job'}, status=201)
 
     else:
-        return JsonResponse({'message': 'This method false'}, status=400)
+        return JsonResponse({'message': 'This method false'}, status=404)
 
 
 @login_required
@@ -215,3 +238,36 @@ def get_now_four_days(request):
 def get_all_folders(request):
     folders = Folders.objects.filter(user=request.user).values()
     return JsonResponse({'folders': list(folders)})
+
+
+def task_date(request):
+    data = json.loads(request.body)
+    data_start_str = data.get('dateStart')
+    print(data_start_str)
+
+    try:
+        data_start = datetime.strptime(data_start_str, "%d.%m.%Y")
+    except ValueError:
+        return JsonResponse({'message': 'Неверный формат даты. Дата должна быть в формате DD.MM.YYYY.'}, status=403)
+
+    data_end = data_start + timedelta(days=3)
+
+    tasks = Tasks.objects.filter(data_add__range=(data_start, data_end))
+
+    date_range = OrderedDict()
+    current_date = data_start.date()
+    while current_date <= data_end.date():
+        date_range[current_date.strftime("%Y-%m-%d")] = []
+        current_date += timedelta(days=1)
+
+    for task in tasks:
+        task_date = task.data_add
+        task_date_str = task_date.strftime("%Y-%m-%d")
+        if task_date_str in date_range:
+            date_range[task_date_str].append({
+                'id': task.id,
+                'name': task.title,
+                'data_add': task_date_str,
+            })
+
+    return JsonResponse({'tasks': date_range})
