@@ -5,6 +5,7 @@ from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta, datetime
+from collections import OrderedDict
 
 
 @login_required
@@ -128,12 +129,11 @@ def get_now_week(request):
     except ValueError:
         return JsonResponse({'error': 'Invalid start_date format'}, status=400)
 
-    start_of_week = today - timedelta(days=today.weekday())
+    start_of_week = today - timedelta(days=today.weekday())  # Понедельник текущей недели
     end_of_week = start_of_week + timedelta(days=6)
 
     user = request.user
     tasks = Tasks.objects.filter(data_add__range=[start_of_week, end_of_week], user=user).values()
-
     return JsonResponse({'tasks': list(tasks)})
 
 

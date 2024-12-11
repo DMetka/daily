@@ -1,10 +1,12 @@
 function loadTasks() {
     const startOfWeek = new Date(currentDate);
-    startOfWeek.setDate(startOfWeek.getDate() - (startOfWeek.getDay() || 7) + 1);
+
+    const dayOfWeek = startOfWeek.getDay();
+
+    startOfWeek.setDate(startOfWeek.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek-2));
 
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(endOfWeek.getDate() + 6);
-
 
     const startDate = startOfWeek.toISOString().split('T')[0];
     const endDate = endOfWeek.toISOString().split('T')[0];
