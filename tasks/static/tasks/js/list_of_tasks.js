@@ -21,10 +21,14 @@ function loadTasks() {
             } else {
                 data.tasks.forEach(task => {
                     const taskElement = document.createElement('div');
+                    taskElement.classList.add('list_task');
                     taskElement.innerHTML = `
                         <h3 class="list_of_task">${task.title}</h3>
                         <small class="list_of_task">Дедлайн: ${task.deadline}</small>
                     `;
+                    taskElement.addEventListener('click', () => {
+                        alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
+                    });
                     tasksList.appendChild(taskElement);
                 });
             }

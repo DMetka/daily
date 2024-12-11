@@ -50,7 +50,10 @@
 }
 
 
-.list_of_tasks div {
+.list_task {
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
     padding: 15px;
     background-color: #ffffff;
     border: 1px solid #ccc;
@@ -61,6 +64,11 @@
     height: 100px;
 }
 
+
+.list_task:hover {
+    background-color: #f0f8ff;
+    transform: translateY(-3px);
+}
 
 .list_of_task h3{
     margin: 0 0 5px 0;
@@ -133,3 +141,5 @@
 #forgotten:hover {
     background-color: #75619d;
 }
+
+
