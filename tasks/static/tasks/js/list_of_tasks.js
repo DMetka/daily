@@ -22,8 +22,8 @@ function loadTasks() {
                 data.tasks.forEach(task => {
                     const taskElement = document.createElement('div');
                     taskElement.innerHTML = `
-                        <p>${task.title}</p>
-                        <p>Дедлайн: ${task.deadline}</p>
+                        <h3 class="list_of_task">${task.title}</h3>
+                        <small class="list_of_task">Дедлайн: ${task.deadline}</small>
                     `;
                     tasksList.appendChild(taskElement);
                 });
