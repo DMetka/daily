@@ -231,10 +231,10 @@ def add_folder(request):
         except json.JSONDecodeError:
             return JsonResponse({'message': 'Invalid JSON format'}, status=400)
 
-        if Tasks.objects.filter(user=user, title=title).exists():
+        if Folders.objects.filter(user=user, title=title).exists():
             return JsonResponse({'message': 'Folder with this name already exists'}, status=400)
 
-        Tasks.objects.create(
+        Folders.objects.create(
             user=user,
             title=title,
         )

@@ -40,6 +40,6 @@ function get_forgotten_tasks() {
         });
 
     setTimeout(function() {
-      popup.remove();
+     remindersContainer.style.display = 'none';
     }, 5000);
 }
