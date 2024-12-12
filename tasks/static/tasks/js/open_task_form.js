@@ -1,4 +1,7 @@
-document.addEventListener("DOMContentLoaded", function() {
+let selectedDate = null
+let currentTaskId = null
+
+export function Main(task) {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
     const TaskForm = document.getElementById("TaskForm");
     const SaveTask = document.getElementById("SaveTask");
@@ -10,17 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const completedInput = document.getElementById("taskCompleted");
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
-    console.log("folderInput элемент:", folderInput);
-    // Функция для открытия формы
-    function openForm(date) {
-        TaskForm.style.display = 'flex';
-         selectedDate = date; // Сохраняем выбранную дату
-        requestAnimationFrame(() => {
-            TaskForm.style.transform = 'translateX(0)';
-        });
-    }
 
-    // Функция для закрытия формы
     function closeForm() {
         TaskForm.style.transform = 'translateX(100%)';
         setTimeout(() => {
@@ -77,21 +70,18 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Обработчик события для кнопок "Добавить задачу"
-    document.querySelectorAll(".add-task-btn").forEach(button => {
+    document.querySelectorAll(".btn-add-task").forEach(button => {
         button.addEventListener("click", function() {
             const dateElement = this.closest('.day').querySelector('.date');
-            const date = dateElement.getAttribute('data-day'); // Получаем дату из атрибута
-            openForm(date); // Открываем форму с выбранной датой
+            const date = dateElement.textContent
+            open(task, date);
         });
     });
 
-    // Обработчик события для кнопки "Сохранить"
     SaveTask.addEventListener("click", function() {
-        // Проверка на заполненность полей
         if (!titleInput.value || !fullTextInput.value || !deadlineInput.value) {
             alert("Пожалуйста, заполните все обязательные поля.");
-            return; // Выход из функции, если поля не заполнены
+            return;
         }
         const taskData = {
             title: titleInput.value,
@@ -105,10 +95,11 @@ document.addEventListener("DOMContentLoaded", function() {
             is_completed: completedInput.checked // Используйте checked для checkbox
         };
 
-        console.log("Отправка данных на сервер:", taskData); // Отладочное сообщение
+        let url = currentTaskId ? `/edit_task/${currentTaskId}/` : '/add_task/';
+        let method = currentTaskId ? 'PUT' : 'POST';
 
-        fetch('add_task', {
-            method: 'POST',
+        fetch(url, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken')
@@ -125,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             console.log(data.message);
             closeForm(); // Закрываем форму только после успешного сохранения
-            // Здесь можно добавить логику для обновления UI, если необходимо
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -134,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Закрытие формы при клике за пределами формы
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("add-task-btn")) {
+        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.classList.contains('list_task')) {
             closeForm();
         }
     });
@@ -155,6 +145,44 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return cookieValue;
     }
+}
 
+export function open(task = null, date = null) {
+    const TaskForm = document.getElementById("TaskForm");
+    const titleInput = document.getElementById("taskName");
+    const fullTextInput = document.getElementById("taskFullText");
+    const deadlineInput = document.getElementById("taskDate");
+    const folderInput = document.getElementById("taskFolder");
+    const priorityInput = document.getElementById("taskPriority");
+    const completedInput = document.getElementById("taskCompleted");
 
-});
+    TaskForm.style.display = 'flex';
+    if (date) {
+        selectedDate = date;
+    }
+
+    requestAnimationFrame(() => {
+        TaskForm.style.transform = 'translateX(0)';
+    });
+
+    if (task.id) {
+        currentTaskId = task.id;
+        titleInput.value = task.title;
+        fullTextInput.value = task.full_text;
+        deadlineInput.value = task.deadline;
+        folderInput.value = task.folder;
+        priorityInput.value = task.priority;
+        completedInput.checked = task.is_completed;
+    } else {
+        currentTaskId = null;
+        titleInput.value = '';
+        fullTextInput.value = '';
+        deadlineInput.value = '';
+        folderInput.value = '';
+        priorityInput.value = '';
+        completedInput.checked = false;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", Main);
+

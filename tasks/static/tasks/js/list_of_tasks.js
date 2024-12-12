@@ -1,3 +1,5 @@
+import { open } from './open_task_form.js'
+
 function loadTasks() {
     const startOfWeek = new Date(currentDate);
 
@@ -29,7 +31,8 @@ function loadTasks() {
                         <small class="list_of_task">Дедлайн: ${task.deadline}</small>
                     `;
                     taskElement.addEventListener('click', () => {
-                        alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
+                        open(task)
+                        // alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
                     });
                     tasksList.appendChild(taskElement);
                 });
