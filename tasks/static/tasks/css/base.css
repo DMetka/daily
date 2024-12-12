@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --main-color: #f8f8fa;
+    --main2-color: #ffffff;
+    --input-background: #ffffff;
+    --input-placeholder: #757575;
+    --active-color: #6d78f4;
+    --text-color: #262626;
+    --text-color2: #abacb9;
+    --text-color3: #242629;
+    --font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    min-height: 100vh;
+    background: var(--main-color);
+}
+
+h1 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    color: var(--text-color);
+    font-family: var(--font-family);
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--text-color3);
+    font-family: var(--font-family);
+}
+
+h3 {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 100%;
+    color: var(--text-color2);
+    font-family: var(--font-family);
+}
+
+p {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 200%;
+    color: var(--text-color3);
+    font-family: var(--font-family);
+}
+
+a {
+    text-decoration: none;
+}
+
+.side_left_menu {
+    position: relative;
+    flex: none;
+    display: grid;
+    width: 275px;
+    overflow: hidden;
+    background-color: var(--main2-color);
+    border-right: 1px solid #EDEDF5;
+}
+
+.link.active {
+    background-color: #e5e7ee;
+}
+
+.link {
+    margin: 0 12px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding: 8px;
+    transition: all .2s ease;
+    column-gap: 8px;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: 40px;
+    padding: 0 12px;
+    overflow: hidden;
+    transition: all .2s ease;
+    column-gap: 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    text-decoration: none;
+    outline: none;
+    background-color: var(--active-color);
+    color: var(--main2-color);
+    font-family: var(--font-family);
+}
+
+.input {
+    border-radius: 4px;
+    border: 1px solid #e6e9f4;
+    display: block;
+    font-size: .875rem;
+    width: 100%;
+    outline: none;
+    height: 40px;
+    padding: 0 15px;
+}
+
+.task-creating_input {
+    position: absolute;
+    height: 38px;
+    min-height: 40px;
+    padding: 10px 12px;
+    overflow: hidden;
+    color: var(--text-color2);
+    background: unset;
+    background-color: var(--main2-color);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1.5px solid transparent;
+    outline: none;
+    border-radius: 8px;
+}
