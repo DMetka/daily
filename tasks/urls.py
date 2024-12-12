@@ -20,5 +20,6 @@ urlpatterns = [
     path('get_now_week/', views.get_now_week, name='get_now_week'),
     path('task_date/', views.task_date),
     path('add_folder/', views.add_folder, name='add_folder'),
+    path('folder_view', views.folder_view, name = 'folder_view'),
 ]
 

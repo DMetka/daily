@@ -119,6 +119,7 @@ def filter(request):
         return JsonResponse({'tasks': list(tasks)})
 
 
+@login_required
 def get_now_week(request):
     start_date_str = request.GET.get('start_date')
     if not start_date_str:
@@ -298,3 +299,10 @@ def add_folder(request):
 
     else:
         return JsonResponse({'message': 'This method false'}, status=400)
+
+
+@login_required
+def folder_view(request):
+    folders = Folders.objects.filter(user=request.user)  # Фильтруем по текущему пользователю
+    print(folders)  # Для отладки, выводим в консоль
+    return render(request, 'tasks/index.html', {'folders': folders})
