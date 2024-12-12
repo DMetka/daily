@@ -5,7 +5,7 @@ body{
 }
 a{
     text-decoration: none;
-    
+
 }
 
 .task_area{
@@ -13,7 +13,7 @@ a{
 }
 
 
-   
+
 .search-container {
     display: flex;
     align-items: center;
@@ -23,11 +23,11 @@ a{
 }
 
 .search-input {
-    flex-grow: 1; 
-    padding: 10px; 
+    flex-grow: 1;
+    padding: 10px;
     margin-right: 10px; /* Отступ между полем ввода и выпадающим меню */
-    border: 1px solid #beaedb; 
-    border-radius: 5px; 
+    border: 1px solid #beaedb;
+    border-radius: 5px;
     font-family: onest;
 }
 
@@ -75,13 +75,14 @@ a{
 .filter-container {
     position: relative;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .filter-select {
     padding: 10px; /* Отступы внутри выпадающего меню */
     border: 1px solid #beaedb; /* Рамка выпадающего меню */
     border-radius: 5px; /* Закругление углов выпадающего меню */
-    cursor: pointer; /* Курсор при наведении */
+    cursor: pointer;
     font-family: onest;
     color: #3a2d34;
 }
@@ -93,19 +94,21 @@ a{
 }
 
 .notification-icon {
-    width: 40px; /* Ширина иконки */
-    height: 40px; /* Высота иконки */
+    width: 40px;
+    height: 40px;
+    position: relative;
 }
 
 .notification-badge {
-    background-color: red; /* Цвет фона для кружка */
-    color: white; /* Цвет текста */
-    border-radius: 50%; /* Круглая форма */
-    padding: 2px 5px; /* Отступы */
-    font-size: 12px; /* Размер шрифта */
-
-    top: -5px; /* Положение кружка */
-    right: -5px; /* Положение кружка */
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 7px 7px;
+    font-size: 12px;
+    display: none;
 }
 
 .notification-popup {

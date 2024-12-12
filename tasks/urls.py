@@ -20,6 +20,9 @@ urlpatterns = [
     path('get_all_folders/', views.get_all_folders, name = 'get_all_folders'),
     path('get_now_week/', views.get_now_week, name='get_now_week'),
     path('task_date/', views.task_date),
+    path('add_folder/', views.add_folder, name='add_folder'),
+    path('folder_view', views.folder_view, name = 'folder_view'),
+    path('task_date/', views.task_date),
     path('my_folders/add_folder/', views.add_folder, name='add_folder'),
     path('get_folder_contents/<int:folder_id>', views.get_folder_contents, name='get_folder_contents'),
     path('search/',views.search_tasks, name = 'search_tasks')

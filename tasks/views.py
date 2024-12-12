@@ -1,11 +1,11 @@
 import json
-from collections import OrderedDict
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta, datetime
+from collections import OrderedDict
 
 
 @login_required
@@ -125,6 +125,7 @@ def filter(request):
         return JsonResponse({'tasks': list(tasks)})
 
 
+@login_required
 def get_now_week(request):
     start_date_str = request.GET.get('start_date')
     if not start_date_str:
@@ -135,12 +136,11 @@ def get_now_week(request):
     except ValueError:
         return JsonResponse({'error': 'Invalid start_date format'}, status=400)
 
-    start_of_week = today - timedelta(days=today.weekday())
+    start_of_week = today - timedelta(days=today.weekday())  # Понедельник текущей недели
     end_of_week = start_of_week + timedelta(days=6)
 
     user = request.user
     tasks = Tasks.objects.filter(data_add__range=[start_of_week, end_of_week], user=user).values()
-
     return JsonResponse({'tasks': list(tasks)})
 
 
@@ -245,39 +245,6 @@ def get_all_folders(request):
     folders = Folders.objects.filter(user=request.user).values()
     return JsonResponse({'folders': list(folders)})
 
-@login_required
-def add_folder(request):
-    if request.method == 'POST':
-        user = request.user
-        if not User.objects.filter(pk=user.id).exists():
-            return JsonResponse({'message': 'No find such user'}, status=400)
-        try:
-            data = json.loads(request.body)
-            title = data.get('title')
-        except json.JSONDecodeError:
-            return JsonResponse({'message': 'Invalid JSON format'}, status=400)
-        if Tasks.objects.filter(user=user, title=title).exists():
-            return JsonResponse({'message': 'Folder with this name already exists'}, status=400)
-        Tasks.objects.create(
-            user=user,
-            title=title,
-        )
-        return JsonResponse({'message': 'Good job'}, status=201)
-    else:
-        return JsonResponse({'message': 'This method false'}, status=400)
-
-@login_required
-def get_folder_contents(request, folder_id):
-    tasks = Tasks.objects.filter(folder_id=folder_id).values()  # Получаем задачи для данной папки
-    return JsonResponse({'tasks': list(tasks)})
-
-@login_required
-def get_my_folders(request):
-    print(f":User  {request.user}")  # Вывод информации о пользователе
-    folders = Folders.objects.filter(user=request.user)
-    print(f"Folders: {folders}")  # Вывод списка папок
-    return render(request, 'tasks/my_folders.html', {'folders': folders})
-
 
 def task_date(request):
     data = json.loads(request.body)
@@ -326,3 +293,51 @@ def search_tasks(request):
         return JsonResponse({'tasks': tasks_list})
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+
+
+@login_required
+def add_folder(request):
+    if request.method == 'POST':
+        user = request.user
+
+        if not User.objects.filter(pk=user.id).exists():
+            return JsonResponse({'message': 'No find such user'}, status=400)
+
+        try:
+            data = json.loads(request.body)
+            title = data.get('title')
+        except json.JSONDecodeError:
+            return JsonResponse({'message': 'Invalid JSON format'}, status=400)
+
+        if Folders.objects.filter(user=user, title=title).exists():
+            return JsonResponse({'message': 'Folder with this name already exists'}, status=400)
+
+        Folders.objects.create(
+            user=user,
+            title=title,
+        )
+
+        return JsonResponse({'message': 'Good job'}, status=201)
+
+    else:
+        return JsonResponse({'message': 'This method false'}, status=400)
+
+
+@login_required
+def folder_view(request):
+    folders = Folders.objects.filter(user=request.user)  # Фильтруем по текущему пользователю
+    print(folders)  # Для отладки, выводим в консоль
+    return render(request, 'tasks/index.html', {'folders': folders})
+
+
+@login_required
+def get_folder_contents(request, folder_id):
+    tasks = Tasks.objects.filter(folder_id=folder_id).values()  # Получаем задачи для данной папки
+    return JsonResponse({'tasks': list(tasks)})
+
+@login_required
+def get_my_folders(request):
+    print(f":User  {request.user}")  # Вывод информации о пользователе
+    folders = Folders.objects.filter(user=request.user)
+    print(f"Folders: {folders}")  # Вывод списка папок
+    return render(request, 'tasks/my_folders.html', {'folders': folders})

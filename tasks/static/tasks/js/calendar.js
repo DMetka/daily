@@ -1,4 +1,4 @@
-let currentDate = new Date();
+let currentDate = new Date(); // Текущая дата
 
 function updateCalendar() {
     const daysElements = document.getElementById('calendar').getElementsByClassName('day');
@@ -15,6 +15,7 @@ function updateCalendar() {
 
         dayNameElement.textContent = dayString.charAt(0).toUpperCase() + dayString.slice(1);
         dateElement.textContent = formattedDate;
+        dateElement.setAttribute('data-day', day.toISOString()); // Устанавливаем data-day
     }
 }
 
