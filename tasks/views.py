@@ -68,6 +68,7 @@ def my_tasks(request):
     }
     return render(request, 'tasks/my_tasks.html', data)
 
+
 def my_folders(request):
     data =  {
         'title' : 'Мои папки',
@@ -281,14 +282,11 @@ def task_date(request):
 @login_required
 def search_tasks(request):
     if request.method == 'GET':
-        query = request.GET.get('q', '')  # Получаем поисковый запрос из параметров GET
+        query = request.GET.get('q', '')
         if query:
-            # Фильтруем задачи по заголовку, игнорируя регистр
             tasks = Tasks.objects.filter(title__icontains=query, user=request.user)
         else:
-            tasks = Tasks.objects.none()  # Если нет запроса, возвращаем пустой QuerySet
-
-        # Формируем список задач для отправки в ответе
+            tasks = Tasks.objects.none()
         tasks_list = [{'id': task.id, 'title': task.title, 'full_text': task.full_text, 'data_add': task.data_add} for task in tasks]
         return JsonResponse({'tasks': tasks_list})
     else:
@@ -325,19 +323,17 @@ def add_folder(request):
 
 @login_required
 def folder_view(request):
-    folders = Folders.objects.filter(user=request.user)  # Фильтруем по текущему пользователю
-    print(folders)  # Для отладки, выводим в консоль
+    folders = Folders.objects.filter(user=request.user)
     return render(request, 'tasks/index.html', {'folders': folders})
 
 
 @login_required
 def get_folder_contents(request, folder_id):
-    tasks = Tasks.objects.filter(folder_id=folder_id).values()  # Получаем задачи для данной папки
+    tasks = Tasks.objects.filter(folder_id=folder_id, user=request.user).values()
     return JsonResponse({'tasks': list(tasks)})
+
 
 @login_required
 def get_my_folders(request):
-    print(f":User  {request.user}")  # Вывод информации о пользователе
     folders = Folders.objects.filter(user=request.user)
-    print(f"Folders: {folders}")  # Вывод списка папок
     return render(request, 'tasks/my_folders.html', {'folders': folders})

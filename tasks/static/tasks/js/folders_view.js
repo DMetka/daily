@@ -4,7 +4,6 @@ document.getElementById('create-folder-button').addEventListener('click', functi
         alert('Пожалуйста, введите название папки.');
         return;
     }
-
     fetch('add_folder/', {
         method: 'POST',
         headers: {
@@ -21,7 +20,6 @@ document.getElementById('create-folder-button').addEventListener('click', functi
     })
     .then(data => {
         document.getElementById('folder-message').innerText = data.message;
-        // Здесь вы можете добавить логику для обновления списка папок, если это необходимо
     })
     .catch(error => {
         console.error("Ошибка:", error);
@@ -29,14 +27,13 @@ document.getElementById('create-folder-button').addEventListener('click', functi
     });
 });
 
-// Функция для получения CSRF-токена
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Проверяем, содержит ли cookie имя, которое мы ищем
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -46,31 +43,41 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// Функция для загрузки содержимого папки
+
 function loadFolderContents(folderId) {
     const folderContents = document.getElementById(`folder-${folderId}-contents`);
-    // Проверяем, загружено ли содержимое
-    if (folderContents.style.display === "none") {
-        fetch(`/get_folder_contents/${folderId}/`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка при загрузке содержимого папки');
-                }
-                return response.json();
-            })
-            .then(data => {
-                folderContents.innerHTML = '';
-                data.tasks.forEach(task => {
-                    const itemElement = document.createElement('div');
-                    itemElement.textContent = task.title;
-                    folderContents.appendChild(itemElement);
-                });
-                folderContents.style.display = "block";
-            })
-            .catch(error => {
-                console.error("Ошибка:", error);
-            });
-    } else {
-        folderContents.style.display = "none";
+    if (folderContents.style.display === 'block') {
+        folderContents.style.display = 'none';
+        return;
     }
+    folderContents.style.display = 'block';
+    folderContents.innerHTML = '';
+    fetch(`/get_folder_contents/${folderId}/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке содержимого папки');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.tasks.length === 0) {
+                folderContents.innerHTML = '<p>В этой папке нет задач!</p>';
+            } else {
+                data.tasks.forEach(task => {
+                    const taskElement = document.createElement('div');
+                    taskElement.classList.add('task-item');
+                    taskElement.innerHTML = `
+                        <h3 class="task-title">${task.title}</h3>
+                    `;
+                    taskElement.addEventListener('click', () => {
+                        alert(`Вы выбрали задачу: ${task.title}${task.deadline ? `\nДедлайн: ${task.deadline}` : ''}`);
+                    });
+                    folderContents.appendChild(taskElement);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            folderContents.innerHTML = '<p>Ошибка при загрузке содержимого папки!</p>';
+        });
 }
