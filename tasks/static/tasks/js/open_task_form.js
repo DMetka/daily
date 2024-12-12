@@ -1,6 +1,6 @@
 let selectedDate = null
 
-document.addEventListener("DOMContentLoaded", function() {
+function Main(task = null) {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
     const TaskForm = document.getElementById("TaskForm");
     const SaveTask = document.getElementById("SaveTask");
@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
 
-    function openForm(date) {
+    if (task) {
+        openForm()
+    }
+
+     function openForm(date) {
         TaskForm.style.display = 'flex';
         selectedDate = date
         requestAnimationFrame(() => {
@@ -155,6 +159,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return cookieValue;
     }
+}
 
+document.addEventListener("DOMContentLoaded", Main);
 
-});
+export default Main;
