@@ -1,18 +1,4 @@
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
+import { open } from './open_task_form.js'
 
 function loadTasks() {
     const startOfWeek = new Date(currentDate);
@@ -36,14 +22,13 @@ function loadTasks() {
                 data.tasks.forEach(task => {
                     const taskElement = document.createElement('div');
                     taskElement.classList.add('list_task');
-                    taskElement.dataset.taskId = task.id; // Сохраняем ID задачи
                     taskElement.innerHTML = `
                         <h3 class="list_of_task">${task.title}</h3>
                         <small class="list_of_task">Дедлайн: ${task.deadline}</small>
                     `;
                     taskElement.addEventListener('click', () => {
-                        console.log(task);
-                        openForm(task.deadline, task);
+                        open(task)
+                        // alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
                     });
                     tasksList.appendChild(taskElement);
                 });

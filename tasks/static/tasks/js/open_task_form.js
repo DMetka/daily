@@ -1,6 +1,7 @@
 let selectedDate = null
+let currentTaskId = null
 
-function Main(task = null) {
+export function Main(task) {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
     const TaskForm = document.getElementById("TaskForm");
     const SaveTask = document.getElementById("SaveTask");
@@ -12,40 +13,6 @@ function Main(task = null) {
     const completedInput = document.getElementById("taskCompleted");
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
-
-    if (task) {
-        openForm()
-    }
-
-    let currentTaskId = null;
-
-    function openForm(date, task = null) {
-        TaskForm.style.display = 'flex';
-        selectedDate = date;
-
-        if (task) {
-            currentTaskId = task.id;
-            titleInput.value = task.title;
-            fullTextInput.value = task.full_text;
-            deadlineInput.value = task.deadline;
-            folderInput.value = task.folder;
-            priorityInput.value = task.priority;
-            completedInput.checked = task.is_completed;
-        } else {
-            currentTaskId = null;
-            titleInput.value = '';
-            fullTextInput.value = '';
-            deadlineInput.value = '';
-            folderInput.value = '';
-            priorityInput.value = '';
-            completedInput.checked = false;
-        }
-
-        requestAnimationFrame(() => {
-            TaskForm.style.transform = 'translateX(0)';
-        });
-    }
-
 
     function closeForm() {
         TaskForm.style.transform = 'translateX(100%)';
@@ -99,30 +66,11 @@ function Main(task = null) {
             });
     }
 
-    document.querySelectorAll(".add-task-btn").forEach(button => {
+    document.querySelectorAll(".btn-add-task").forEach(button => {
         button.addEventListener("click", function() {
             const dateElement = this.closest('.day').querySelector('.date');
             const date = dateElement.textContent
-            openForm(date);
-        });
-    });
-
-    document.querySelectorAll(".edit-task-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            const taskId = this.dataset.taskId;
-            fetch(`/get_task/${taskId}/`, {
-                method: 'GET',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-            })
-            .then(response => response.json())
-            .then(task => {
-                openForm(task.date, task);
-            })
-            .catch(error => {
-                console.error("Ошибка загрузки задачи:", error);
-            });
+            open(task, date);
         });
     });
 
@@ -172,7 +120,7 @@ function Main(task = null) {
     });
 
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task")) {
+        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.classList.contains('list_task')) {
             closeForm();
         }
     });
@@ -193,6 +141,42 @@ function Main(task = null) {
     }
 }
 
+export function open(task = null, date = null) {
+    const TaskForm = document.getElementById("TaskForm");
+    const titleInput = document.getElementById("taskName");
+    const fullTextInput = document.getElementById("taskFullText");
+    const deadlineInput = document.getElementById("taskDate");
+    const folderInput = document.getElementById("taskFolder");
+    const priorityInput = document.getElementById("taskPriority");
+    const completedInput = document.getElementById("taskCompleted");
+
+    TaskForm.style.display = 'flex';
+    if (date) {
+        selectedDate = date;
+    }
+
+    requestAnimationFrame(() => {
+        TaskForm.style.transform = 'translateX(0)';
+    });
+
+    if (task.id) {
+        currentTaskId = task.id;
+        titleInput.value = task.title;
+        fullTextInput.value = task.full_text;
+        deadlineInput.value = task.deadline;
+        folderInput.value = task.folder;
+        priorityInput.value = task.priority;
+        completedInput.checked = task.is_completed;
+    } else {
+        currentTaskId = null;
+        titleInput.value = '';
+        fullTextInput.value = '';
+        deadlineInput.value = '';
+        folderInput.value = '';
+        priorityInput.value = '';
+        completedInput.checked = false;
+    }
+}
+
 document.addEventListener("DOMContentLoaded", Main);
 
-export default Main;

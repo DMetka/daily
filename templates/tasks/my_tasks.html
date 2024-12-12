@@ -31,28 +31,36 @@
         <div class="list_of_tasks">
             <!--Автоматическое добавление задач-->
         </div>
+        <div class="list_of_forgotten_tasks" style="display: none;"></div>
+        <button id="forgotten" onclick="get_forgotten_tasks()">&#9827;</button>
+        <div id="forgotten-container"></div>
+
         <div class="task">
             <div class="hidden" id="TaskForm">
                 {% csrf_token %}
                 <div class="task-status">
-                    <input type="checkbox" id="taskCompleted">
-                    <label for="taskCompleted">Выполнено</label>
-                    <button class="start-timer">Старт</button>
+                    <label for="taskCompleted">
+                        <input type="checkbox" id="taskCompleted">
+                        Выполнено
+                    </label>
+                    <button class="btn">Старт</button>
                 </div>
                 <input type="text" placeholder="Название задачи" id="taskName">
-                <p>Крайний срок выполнения задачи</p>
-                <input type="date" id="taskDate">
+                <div class="deadline" >
+                    <p>Крайний срок выполнения задачи</p>
+                    <input type="date" id="taskDate">
+                </div>
                 <div class="priority">
-                <p class="priority-text"> Приоритет задачи</p>
-                <select id="taskPriority" class="task-priority">
-                    <option value=3>Низкий</option>
-                    <option value=2>Средний</option>
-                    <option value=1>Высокий</option>
-                </select>
+                    <p class="priority-text btn"> Приоритет задачи</p>
+                    <select id="taskPriority" class="priority-btn btn">
+                        <option value=3>Низкий</option>
+                        <option value=2>Средний</option>
+                        <option value=1>Высокий</option>
+                    </select>
                 </div>
                 <textarea placeholder="Заметка" id = "taskFullText"></textarea>
                 <div>
-                    <button id="chooseFolderBtn" type="button">Выберите папку</button>
+                    <button id="chooseFolderBtn" type="button" class="btn">Выберите папку</button>
                     <ul id="foldersList" style="display: none; position: absolute; list-style: none; padding: 0; margin: 0;">
                     </ul>
                 </div>
@@ -63,31 +71,24 @@
                     <div class="subtask">
                         <input type="text" placeholder="Подзадача">
                     </div>
-                </div>
-                <div class="button-subtask-container">
-                    <button id="addSubtask">+</button>
-                    <button id="removeSubtask">-</button>
+                    <div class="button-subtask-container">
+                        <button id="addSubtask" class="circle-btn">+</button>
+                        <button id="removeSubtask" class="circle-btn">-</button>
+                    </div>
                 </div>
 
-                <div class = "save-btn-container">
-                    <button id = "SaveTask">Сохранить</button>
-                </div>
+                <button id = "SaveTask" class="btn">Сохранить</button>
             </div>
         </div>
-        <div class="list_of_forgotten_tasks" style="display: none;"></div>
-        <button id="forgotten" onclick="get_forgotten_tasks()">&#9827;</button>
-        <div id="forgotten-container"></div>
     </div>
 </div>
-
 {% endblock %}
 
 
 {% block scripts %}
-<script src="{% static 'tasks/js/open_task_form.js' %}"></script>
+<script src="{% static 'tasks/js/open_task_form.js' %}" type="module"></script>
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar_for_week.js' %}"></script>
-<script src="{% static 'tasks/js/remind_task.js' %}"></script>
-<script src="{% static 'tasks/js/list_of_tasks.js' %}"></script>
+<script src="{% static 'tasks/js/list_of_tasks.js' %}" type="module"></script>
 <script src="{% static 'tasks/js/forgotten_tasks.js' %}"></script>
 {% endblock %}
