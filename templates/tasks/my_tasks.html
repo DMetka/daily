@@ -14,14 +14,11 @@
 {% block content %}
 <div class="main-area"><!--Вся страница-->
     <div class="side_left_menu"><!--Боковое меню-->
-        <div class = "user"><!--Добавляется картинка и имя (еще буду думать как сюда забивать данные с авторизации)-->
-            <h3>Моё имя</h3><!--По идее сюда будет добавляться имя пользователя с авторизации-->
+        <div class = "user">
+            <h3>Профиль</h3>
         </div>
         <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button><!--Кнопка, ведет к моим задачам-->
-        <div class="folders">
-            <p>Папки</p>
-            <ul><!--Здесь должны отображаться папки, пока не доделано--></ul>
-        </div>
+         <button class="btn_left"><a href="{% url 'my_folders' %}">Мои папки</a></button>
     </div>
     <div class="area">
         <div class = "my_task_area">
