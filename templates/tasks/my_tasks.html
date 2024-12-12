@@ -21,11 +21,11 @@
     </div>
     <div class="area">
         <div class="my_task_area">
-            <div class="week-view">
+            <div class="month-view">
                 <h2>Список задач на неделю</h2>
-                <button id="prevDays" onclick="changeDays(-7)">&#9664;</button>
-                <span id="weekRange">Loading...</span>
-                <button id="nextDays" onclick="changeDays(7)">&#9654;</button>
+                <button id="prevMonth" onclick="changeMonth(-1)">&#9664;</button>
+                <span id="monthRange">Loading...</span>
+                <button id="nextMonth" onclick="changeMonth(1)">&#9654;</button>
             </div>
         </div>
         <div class="list_of_tasks">
@@ -87,8 +87,9 @@
 
 {% block scripts %}
 <script src="{% static 'tasks/js/open_task_form.js' %}" type="module"></script>
+<script src="{% static 'tasks/js/forgotten_tasks.js' %}" type="module"></script>
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
-<script src="{% static 'tasks/js/calendar_for_week.js' %}"></script>
+<script src="{% static 'tasks/js/calendar_for_month.js' %}"></script>
 <script src="{% static 'tasks/js/list_of_tasks.js' %}" type="module"></script>
-<script src="{% static 'tasks/js/forgotten_tasks.js' %}"></script>
+
 {% endblock %}

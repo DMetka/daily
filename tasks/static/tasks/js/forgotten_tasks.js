@@ -1,4 +1,5 @@
-function get_forgotten_tasks() {
+import { open } from './open_task_form.js'
+export function get_forgotten_tasks() {
     const forgottenContainer = document.querySelector('.list_of_forgotten_tasks');
 
     if (forgottenContainer.style.display === 'block') {
@@ -29,8 +30,9 @@ function get_forgotten_tasks() {
                         <h3 class="forgottens">${task.title}</h3>
                         <small class="forgottens">Дедлайн истек: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
                     `;
+                    console.log(task)
                     taskElement.addEventListener('click', () => {
-                        alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
+                        open(task)
                     });
                     forgottenContainer.appendChild(taskElement);
                 });
@@ -44,3 +46,5 @@ function get_forgotten_tasks() {
             forgottenContainer.innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
         });
 }
+
+window.get_forgotten_tasks = get_forgotten_tasks;

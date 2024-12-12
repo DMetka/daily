@@ -151,7 +151,14 @@ def get_now_week(request):
 
 @login_required
 def get_now_month(request):
-    today = date.today()
+    start_date_str = request.GET.get('start_date')
+    if not start_date_str:
+        return JsonResponse({'error': 'start_date is required'}, status=400)
+
+    try:
+        today = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid start_date format'}, status=400)
     user = request.user
     start_of_month = today.replace(day=1)
     if today.month == 12:
@@ -370,11 +377,25 @@ def edit_task(request, task_id):
             return JsonResponse({'message': 'Task updated successfully'})
         except Exception as e:
             return JsonResponse({'message': f'Error updating task: {str(e)}'}, status=400)
+
+    elif request.method == 'PUT':
+        try:
+            data = json.loads(request.body)
+            task.title = data.get('title', task.title)
+            task.full_text = data.get('full_text', task.full_text)
+            task.deadline = data.get('deadline', task.deadline)
+            task.folder_id = data.get('folder', task.folder_id)
+            task.priority = data.get('priority', task.priority)
+            task.is_completed = data.get('is_completed', task.is_completed)
+            task.save()
+            return JsonResponse({'message': 'Task updated successfully'})
+        except Exception as e:
+            return JsonResponse({'message': f'Error updating task: {str(e)}'}, status=400)
+
     else:
         return JsonResponse({'message': 'Method not allowed'}, status=405)
 
 
-@login_required
 def get_task(request, task_id):
     if request.method == 'GET':
         task = get_object_or_404(Tasks, id=task_id, user=request.user)
@@ -387,4 +408,5 @@ def get_task(request, task_id):
             'priority': task.priority,
             'is_completed': task.is_completed,
         })
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+    else:
+        return JsonResponse({'message': 'Method not allowed'}, status=405)
