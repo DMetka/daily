@@ -1,5 +1,4 @@
 import json
-from collections import OrderedDict
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from .models import *
@@ -329,3 +328,16 @@ def folder_view(request):
     folders = Folders.objects.filter(user=request.user)  # Фильтруем по текущему пользователю
     print(folders)  # Для отладки, выводим в консоль
     return render(request, 'tasks/index.html', {'folders': folders})
+
+
+@login_required
+def get_folder_contents(request, folder_id):
+    tasks = Tasks.objects.filter(folder_id=folder_id).values()  # Получаем задачи для данной папки
+    return JsonResponse({'tasks': list(tasks)})
+
+@login_required
+def get_my_folders(request):
+    print(f":User  {request.user}")  # Вывод информации о пользователе
+    folders = Folders.objects.filter(user=request.user)
+    print(f"Folders: {folders}")  # Вывод списка папок
+    return render(request, 'tasks/my_folders.html', {'folders': folders})
