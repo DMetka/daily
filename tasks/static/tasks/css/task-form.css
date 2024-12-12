@@ -1,12 +1,12 @@
 #TaskForm {
     position: fixed;
-    top: 0; 
-    right: 0; 
-    background-color: #BEAEDB;
+    top: 0;
+    right: 0;
+    background-color: var(--main2-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    width: 35%;
-    height: 95%;
+    width: 25%;
+    height: 100%;
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     color: #3A2D34;
@@ -18,8 +18,7 @@
 #TaskForm input[type="date"],
 #TaskForm textarea {
     width: 100%; 
-    padding: 10px; /* Отступы внутри полей ввода */
-    margin-bottom: 10px; /* Отступ между полями ввода */
+    padding: 10px;
     border: 1px solid #ccc; 
     border-radius: 5px; 
 }
@@ -28,32 +27,15 @@
     height: 100px; 
 }
 
-#TaskForm .task-status {
-    display: flex; /* Flexbox для размещения элементов в строку */
-    align-items: center; 
-    margin-bottom: 10px; /* Отступ между статусом задачи и следующими элементами */
+
+.task-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
 #TaskForm .task-status input[type="checkbox"] {
     margin-right: 5px; 
-}
-
-#TaskForm .task-status button {
-    padding: 5px 10px; 
-    margin-left: auto; 
-    background-color: #75619D; 
-    color: #E6EFF7; 
-    font-weight: 600;
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-}
-
-#TaskForm .task-status button:hover{
-    background-color: #BEAEDB;
-}
-
-#TaskForm .subtask {
-    margin-top: 10px; 
 }
 
 #TaskForm .subtask input[type="text"] {
@@ -73,90 +55,54 @@
     border-color: #BEAEDB; 
 }
 
-#TaskForm .priority{
+#TaskForm {
     display: flex;
-    margin-bottom: 20px;
-    height: 5%;
-    align-items: center;
-    width: 100%;
+    flex-direction: column;
+    gap: 20px;
 }
 
 
-
-#TaskForm .task-priority{
-    margin-top: 10px;
-    background-color: #75619D;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    border: none;
-    color: #E6EFF7 ;
-    font-weight: 600;
-    margin-left: auto; /* Та же проблема что с кнопкой фильтр*/
-    cursor: pointer;
+.priority{
+    display: flex;
+    justify-content: space-between;
 }
 
 
 .save-btn-container{
-    display: flex; /* Flexbox для контейнера кнопки */
-    justify-content: flex-end; /* Выравнивание кнопки по правому краю */
+    display: flex;
+    justify-content: flex-end;
     margin-top: auto; 
 }
 
-#SaveTask {
-    padding: 10px 20px; 
-    background-color: #75619D; 
-    color: #E6EFF7; /* Цвет текста кнопки */
+
+.button-subtask-container button {
+    width: 25px;
+    height: 25px;
+    background-color: var(--text-color3);
+    color: var(--main2-color);
     font-weight: 600;
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; /* Курсор при наведении */
-
-}
-
-#SaveTask:hover {
-    background-color: #BEAEDB; 
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .button-subtask-container {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
-}
-
-.button-subtask-container button {
-    width: 25px; /* Размер кнопок */
-    height: 25px; /* Высота кнопок */
-    background-color: #75619D;
-    color: #e6eff7;
-    font-weight: 600;
-    border: none;
-    border-radius: 50%; /* Делаем кнопки круглыми */
-    cursor: pointer;
-    font-size: 20px; /* Размер шрифта */
+    margin-top: 5px;
 }
 
 .button-subtask-container button:hover {
-    background-color: #beaedb;
+    background-color: var(--active-color);
 }
 
-/* Стиль для кнопки выбора */
-#chooseFolderBtn {
-    background-color: #6a5acd;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
+.circle-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#chooseFolderBtn:hover {
-    background-color: #483d8b;
-}
-
-/* Стиль для списка */
 #foldersList {
     display: none;
     position: absolute;
@@ -171,7 +117,6 @@
     width: 200px;
 }
 
-/* Стиль для каждого элемента списка */
 #foldersList li {
     padding: 8px 12px;
     cursor: pointer;
@@ -184,7 +129,6 @@
     color: #483d8b;
 }
 
-/* Дополнительные стили */
 #foldersList li:active {
     background-color: #dcdcdc;
     color: #483d8b;

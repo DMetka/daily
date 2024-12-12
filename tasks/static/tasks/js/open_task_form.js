@@ -1,6 +1,6 @@
-let selectedDate = 0;
+let selectedDate = null
 
-document.addEventListener("DOMContentLoaded", function() {
+function Main(task = null) {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
     const TaskForm = document.getElementById("TaskForm");
     const SaveTask = document.getElementById("SaveTask");
@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const completedInput = document.getElementById("taskCompleted");
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
+
+    if (task) {
+        openForm()
+    }
 
     let currentTaskId = null;
 
@@ -98,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".add-task-btn").forEach(button => {
         button.addEventListener("click", function() {
             const dateElement = this.closest('.day').querySelector('.date');
-            const date = dateElement.textContent;
+            const date = dateElement.textContent
             openForm(date);
         });
     });
@@ -168,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("add-task-btn")) {
+        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task")) {
             closeForm();
         }
     });
@@ -187,4 +191,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return cookieValue;
     }
-});
+}
+
+document.addEventListener("DOMContentLoaded", Main);
+
+export default Main;
