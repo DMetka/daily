@@ -1,3 +1,5 @@
+let selectedDate = null
+
 document.addEventListener("DOMContentLoaded", function() {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
     const TaskForm = document.getElementById("TaskForm");
@@ -10,11 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const completedInput = document.getElementById("taskCompleted");
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
-    console.log("folderInput элемент:", folderInput);
-    // Функция для открытия формы
+
     function openForm(date) {
         TaskForm.style.display = 'flex';
-         selectedDate = date; // Сохраняем выбранную дату
+        selectedDate = date
         requestAnimationFrame(() => {
             TaskForm.style.transform = 'translateX(0)';
         });
@@ -78,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Обработчик события для кнопок "Добавить задачу"
-    document.querySelectorAll(".add-task-btn").forEach(button => {
+    document.querySelectorAll(".btn-add-task").forEach(button => {
         button.addEventListener("click", function() {
             const dateElement = this.closest('.day').querySelector('.date');
-            const date = dateElement.getAttribute('data-day'); // Получаем дату из атрибута
-            openForm(date); // Открываем форму с выбранной датой
+            const date = dateElement.textContent
+            openForm(date);
         });
     });
 
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         console.log("Отправка данных на сервер:", taskData); // Отладочное сообщение
 
-        fetch('add_task', {
+        fetch('add_task/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             console.log(data.message);
             closeForm(); // Закрываем форму только после успешного сохранения
-            // Здесь можно добавить логику для обновления UI, если необходимо
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Закрытие формы при клике за пределами формы
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("add-task-btn")) {
+        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task")) {
             closeForm();
         }
     });
