@@ -44,4 +44,3 @@ function get_forgotten_tasks() {
             forgottenContainer.innerHTML = '<p>Ошибка при загрузке забытых задач!</p>';
         });
 }
-

@@ -14,14 +14,14 @@
 {% block content %}
 <div class="main-area"><!--Вся страница-->
     <div class="side_left_menu"><!--Боковое меню-->
-        <div class = "user">
+        <div class="user">
             <h3>Профиль</h3>
         </div>
-        <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button><!--Кнопка, ведет к моим задачам-->
-         <button class="btn_left"><a href="{% url 'my_folders' %}">Мои папки</a></button>
+        <button class="btn_left"><a href="{% url 'home' %}">На главную</a></button><!--Кнопка, ведет к моим задачам-->
+        <button class="btn_left"><a href="{% url 'my_folders' %}">Мои папки</a></button>
     </div>
     <div class="area">
-        <div class = "my_task_area">
+        <div class="my_task_area">
             <div class="week-view">
                 <h2>Список задач на неделю</h2>
                 <button id="prevDays" onclick="changeDays(-7)">&#9664;</button>
@@ -32,13 +32,55 @@
         <div class="list_of_tasks">
             <!--Автоматическое добавление задач-->
         </div>
+        <div class="task">
+            <div class="hidden" id="TaskForm">
+                {% csrf_token %}
+                <div class="task-status">
+                    <input type="checkbox" id="taskCompleted">
+                    <label for="taskCompleted">Выполнено</label>
+                    <button class="start-timer">Старт</button>
+                </div>
+                <input type="text" placeholder="Название задачи" id="taskName">
+                <p>Крайний срок выполнения задачи</p>
+                <input type="date" id="taskDate">
+                <div class="priority">
+                <p class="priority-text"> Приоритет задачи</p>
+                <select id="taskPriority" class="task-priority">
+                    <option value=3>Низкий</option>
+                    <option value=2>Средний</option>
+                    <option value=1>Высокий</option>
+                </select>
+                </div>
+                <textarea placeholder="Заметка" id = "taskFullText"></textarea>
+                <div>
+                    <button id="chooseFolderBtn" type="button">Выберите папку</button>
+                    <ul id="foldersList" style="display: none; position: absolute; list-style: none; padding: 0; margin: 0;">
+                    </ul>
+                </div>
+                <select id="taskFolder" style="display: none;">
+                    <option value="">Выберите папку</option>
+                </select>
+                <div class="subtask-container">
+                    <div class="subtask">
+                        <input type="text" placeholder="Подзадача">
+                    </div>
+                </div>
+                <div class="button-subtask-container">
+                    <button id="addSubtask">+</button>
+                    <button id="removeSubtask">-</button>
+                </div>
+
+                <div class = "save-btn-container">
+                    <button id = "SaveTask">Сохранить</button>
+                </div>
+            </div>
+        </div>
         <div class="list_of_forgotten_tasks" style="display: none;"></div>
         <button id="forgotten" onclick="get_forgotten_tasks()">&#9827;</button>
         <div id="forgotten-container"></div>
-
-
     </div>
 </div>
+
 {% endblock %}
 
 

@@ -337,3 +337,50 @@ def get_folder_contents(request, folder_id):
 def get_my_folders(request):
     folders = Folders.objects.filter(user=request.user)
     return render(request, 'tasks/my_folders.html', {'folders': folders})
+
+
+@login_required
+def edit_task(request, task_id):
+    user = request.user
+    task = get_object_or_404(Tasks, id=task_id, user=user)
+    if request.method == 'GET':
+        return JsonResponse({
+            'id': task.id,
+            'title': task.title,
+            'full_text': task.full_text,
+            'deadline': task.deadline.isoformat() if task.deadline else None,
+            'folder': task.folder.id if task.folder else None,
+            'priority': task.priority,
+            'is_completed': task.is_completed,
+        })
+    elif request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            task.title = data.get('title', task.title)
+            task.full_text = data.get('full_text', task.full_text)
+            task.deadline = data.get('deadline', task.deadline)
+            task.folder_id = data.get('folder', task.folder_id)
+            task.priority = data.get('priority', task.priority)
+            task.is_completed = data.get('is_completed', task.is_completed)
+            task.save()
+            return JsonResponse({'message': 'Task updated successfully'})
+        except Exception as e:
+            return JsonResponse({'message': f'Error updating task: {str(e)}'}, status=400)
+    else:
+        return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+
+@login_required
+def get_task(request, task_id):
+    if request.method == 'GET':
+        task = get_object_or_404(Tasks, id=task_id, user=request.user)
+        return JsonResponse({
+            'id': task.id,
+            'title': task.title,
+            'full_text': task.full_text,
+            'deadline': task.deadline.isoformat() if task.deadline else None,
+            'folder': task.folder.id if task.folder else None,
+            'priority': task.priority,
+            'is_completed': task.is_completed,
+        })
+    return JsonResponse({'error': 'Invalid request method'}, status=400)

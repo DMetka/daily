@@ -25,7 +25,9 @@ urlpatterns = [
     path('task_date/', views.task_date),
     path('my_folders/add_folder/', views.add_folder, name='add_folder'),
     path('get_folder_contents/<int:folder_id>/', views.get_folder_contents, name='get_folder_contents'),
-    path('search/',views.search_tasks, name = 'search_tasks')
+    path('search/',views.search_tasks, name = 'search_tasks'),
+    path('edit_task/<int:task_id>/', views.edit_task, name='edit_task'),
+    path('get_task/<int:task_id>/', views.get_task, name='get_task')
 
 ]
 
