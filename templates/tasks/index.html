@@ -17,14 +17,14 @@
             <h3>Профиль</h3>
         </div>
         <button class = "btn_left"><a href="{% url 'my_tasks' %}">Мои задачи</a></button>
-        <div class="folders">
-            <p>Папки</p>
-            <ul><!--Здесь должны отображаться папки, пока не доделано--></ul>
-        </div>
+        <button class="btn_left"><a href="{% url 'my_folders' %}">Мои папки</a></button> <!-- Измененная кнопка -->
     </div>
     <div class = "task_area">
         <div class ="search-container">
-            <input type="text" placeholder="Найти задачу..." class="search-input">
+            <input type="text" placeholder="Найти задачу..." class="search-input" id="search-input">
+            <button class="search-button" id="search-button" >Поиск</button>
+            <div id="search-results"></div> <!--пока найденные задачи выводятся сюда, сейчас придумаю как и куда их выводить-->
+
             <div class="filter-container">
                 <label for="filterSelect">Фильтр:</label>
                 <select id="filterSelect" class="filter-select">
@@ -115,5 +115,7 @@
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
+<script src="{% static 'tasks/js/search_tasks.js' %}"></script>
+
 
 {% endblock %}

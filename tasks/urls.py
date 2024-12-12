@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name = 'home'),
     path('my_tasks/', views.my_tasks, name='my_tasks'),
+    path('my_folders/', views.get_my_folders, name='my_folders'),
     path('go_back_to_index/', views.go_back_to_index, name = 'go_back_to_index'),
     path('add_task/', views.add_task, name='add_task'),
     path('remove_task/<int:task_id>/', views.delete_task, name='delete_task'),
@@ -21,5 +22,10 @@ urlpatterns = [
     path('task_date/', views.task_date),
     path('add_folder/', views.add_folder, name='add_folder'),
     path('folder_view', views.folder_view, name = 'folder_view'),
+    path('task_date/', views.task_date),
+    path('my_folders/add_folder/', views.add_folder, name='add_folder'),
+    path('get_folder_contents/<int:folder_id>', views.get_folder_contents, name='get_folder_contents'),
+    path('search/',views.search_tasks, name = 'search_tasks')
+
 ]
 

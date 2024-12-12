@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Ежедневник{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'tasks/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/task-form.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/side-menu.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/week.css' %}">
+<link rel="stylesheet" href="{% static 'tasks/css/my_folders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-area"><!--Вся страница-->
+    <div class="side_left_menu"><!--Боковое меню-->
+        <div class = "user">
+
+            <h3>Профиль</h3>
+        </div>
+        <button class = "btn_left"><a href="{% url 'my_tasks' %}">Мои задачи</a></button>
+         <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button>
+    </div>
+    <div class="area">
+    <h2>Мои папки</h2>
+    <button id="create-folder-button">Создать папку</button>
+    <input type="text" id="folder-title" placeholder="Введите название папки" />
+    <div id="folder-message"></div> <!-- Для отображения сообщений -->
+
+
+        <div class="folders">
+            <ul id="folder-list">
+                {% for folder in folders %}
+                <li>
+                    <button onclick="loadFolderContents({{ folder.id }})">{{ folder.title }}</button>
+                    <div id="folder-{{ folder.id }}-contents" class="folder-contents" style="display:none;">
+                        <!-- Содержимое папки будет загружено сюда -->
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="{% static 'tasks/js/folders_view.js' %}"></script>
+
+{% endblock %}
