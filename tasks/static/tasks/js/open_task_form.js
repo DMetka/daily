@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Функция для загрузки списка папок
     function loadFolders() {
-    fetch('get_all_folders/', {
+    fetch('get_all_folders', {
         method: 'GET',
         headers: {
             'X-CSRFToken': getCookie('csrftoken'),
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         console.log("Отправка данных на сервер:", taskData); // Отладочное сообщение
 
-        fetch('/add_task/', {
+        fetch('add_task', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -59,7 +59,32 @@
     margin: 10px 0;
 }
 
+.task-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s;
+}
 
+.task-card:hover {
+    background-color: #e0e0e0; /* Изменение цвета при наведении */
+}
+
+.tasks-container {
+    margin-top: 10px;
+}
+
+.my_task_area {
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 250px;
+}
 
 
 

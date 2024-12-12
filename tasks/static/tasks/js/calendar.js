@@ -13,15 +13,67 @@ function updateCalendar() {
         const dayString = day.toLocaleDateString('ru-RU', { weekday: 'long' });
         const formattedDate = day.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
-        dayNameElement.textContent = dayString.charAt(0).toUpperCase() + dayString.slice(1); // Первая буква заглавная
+        dayNameElement.textContent = dayString.charAt(0).toUpperCase() + dayString.slice(1);
         dateElement.textContent = formattedDate;
+        dateElement.setAttribute('data-day', day.toISOString()); // Устанавливаем data-day
     }
 }
 
 function changeDays(direction) {
-    currentDate.setDate(currentDate.getDate() + direction); // Изменяем текущую дату на 4 дня
-    updateCalendar(); // Обновляем календарь
+    currentDate.setDate(currentDate.getDate() + direction);
+    updateCalendar();
+
+    const taskContainers = document.querySelectorAll('.tasks-container')
+    if (taskContainers) {
+        taskContainers.forEach(taskContainer => {
+            taskContainer.innerHTML = ''
+        })
+
+        const date = document.querySelector('.date').textContent
+
+        fetch('task_date/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({
+                dateStart: date
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            console.log(data);
+
+            // тут нужно вставить код, который будет вставлять таски по местам
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+
+
+    }
 }
 
-// Вызываем функцию для обновления календаря при загрузке страницы
 updateCalendar();
+
+function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Проверяем, начинается ли cookie с нужного имени
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }

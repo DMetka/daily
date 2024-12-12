@@ -1,15 +1,17 @@
 function loadTasks() {
     const startOfWeek = new Date(currentDate);
-    startOfWeek.setDate(startOfWeek.getDate() - (startOfWeek.getDay() || 7) + 1); // Начало недели (понедельник)
+
+    const dayOfWeek = startOfWeek.getDay();
+
+    startOfWeek.setDate(startOfWeek.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek-2));
 
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6); // Конец недели (воскресенье)
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
 
-    // Форматируем даты для передачи на сервер
     const startDate = startOfWeek.toISOString().split('T')[0];
     const endDate = endOfWeek.toISOString().split('T')[0];
 
-    // Отправляем запрос с параметрами
+
     fetch(`/get_now_week/?start_date=${startDate}`)
         .then(response => response.json())
         .then(data => {
@@ -21,10 +23,14 @@ function loadTasks() {
             } else {
                 data.tasks.forEach(task => {
                     const taskElement = document.createElement('div');
+                    taskElement.classList.add('list_task');
                     taskElement.innerHTML = `
                         <h3 class="list_of_task">${task.title}</h3>
                         <small class="list_of_task">Дедлайн: ${task.deadline}</small>
                     `;
+                    taskElement.addEventListener('click', () => {
+                        alert(`Вы выбрали задачу: ${task.title}\nДедлайн: ${task.deadline}`);
+                    });
                     tasksList.appendChild(taskElement);
                 });
             }
@@ -36,12 +42,12 @@ function loadTasks() {
 
 
 function changeDays(direction) {
-    currentDate.setDate(currentDate.getDate() + direction); // Обновляем текущую дату
-    updateWeekRange(); // Обновляем диапазон недели
-    loadTasks(); // Загружаем задачи для обновлённой недели
+    currentDate.setDate(currentDate.getDate() + direction);
+    updateWeekRange();
+    loadTasks();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateWeekRange(); // Инициализируем диапазон недели
-    loadTasks(); // Загружаем задачи при загрузке страницы
+    updateWeekRange();
+    loadTasks();
 });
