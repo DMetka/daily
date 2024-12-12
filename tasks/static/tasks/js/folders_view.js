@@ -1,29 +1,34 @@
 document.getElementById('create-folder-button').addEventListener('click', function() {
     const title = document.getElementById('folder-title').value;
     if (!title) {
-        alert('Пожалуйста, введите название папки.');
+        document.getElementById('response-message').innerText = 'Название папки не может быть пустым.';
         return;
     }
-    fetch('add_folder/', {
+
+    // Отправка AJAX-запроса
+    fetch('add_folder/', {  // Убедитесь, что URL соответствует вашему маршруту
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
+            'X-CSRFToken': getCookie('csrftoken')  // Если вы используете CSRF-токены
         },
         body: JSON.stringify({ title: title })
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Ошибка при создании папки');
+            return response.json().then(data => {
+                throw new Error(data.message);
+            });
         }
         return response.json();
     })
     .then(data => {
-        document.getElementById('folder-message').innerText = data.message;
+        document.getElementById('response-message').innerText = 'Папка успешно создана';
+        // Очистить поле ввода
+        document.getElementById('folder-title').value = '';
     })
     .catch(error => {
-        console.error("Ошибка:", error);
-        document.getElementById('folder-message').innerText = error.message;
+        document.getElementById('response-message').innerText = error.message;
     });
 });
 
