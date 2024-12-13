@@ -1,48 +1,23 @@
-.my_task_area {
-    margin-top: 5px; /* Отступ между контейнером поиска и неделей */
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-/* Заголовок недели */
-.week-view h2 {
-    text-align: center;
-    color: #3A2D34;
-}
-
 .week-view .calendar-container{
     display: flex;
     align-items: center;
     width: 100%;
-    box-sizing: border-box;
 }
 
-/* Навигация */
 .week-view .navigation {
     margin: 0px 10px;
 }
 
-.week-view button {
-    background-color: #beaedb;
-    color: #3A2D34;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.btn-add-task {
+    width: 250px;
+    margin-bottom: 15px;
 }
 
-.week-view button:hover {
-    background-color: #75619d;
-}
-
-/* Календарь */
 .week-view .calendar {
     display: flex;
     justify-content: space-around;
     flex-grow: 1;
     width: 100%;
-    box-sizing: border-box;
 }
 
 .week-view .day {
@@ -64,13 +39,9 @@
     border-radius: 5px;
     padding: 10px;
     margin: 5px 0;
-    background-color: #f9f9f9;
-    cursor: pointer; /* Указатель при наведении */
+    background-color: var(--main2-color);
+    cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.task-card:hover {
-    background-color: #e0e0e0; /* Изменение цвета при наведении */
 }
 
 .tasks-container {
@@ -79,12 +50,19 @@
 
 .my_task_area {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--main2-color);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 250px;
+    height: 30px;
+    margin-bottom: 10px;
 }
 
+.my_task_area:hover {
+    border: 1px solid #ccc;
+}
 
 

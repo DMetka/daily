@@ -44,20 +44,24 @@ def delete_tasks_from_folder(request):
 
 def index(request):
     data_start = timezone.now()
-    data_end = data_start + timedelta(days=3)
+    data_end = data_start + timedelta(days=6)
+    days_translation = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
 
     tasks = Tasks.objects.filter(data_add__range=(data_start, data_end))
 
     date_range = OrderedDict()
     current_date = data_start.date()
     while current_date <= data_end.date():
-        date_range[current_date] = []
+        date_range[current_date] = {
+            'weekday': days_translation[current_date.weekday()],
+            'tasks': [],
+        }
         current_date += timedelta(days=1)
 
     for task in tasks:
         task_date = task.data_add
         if task_date in date_range:
-            date_range[task_date].append(task)
+            date_range[task_date]['tasks'].append(task)
 
     return render(request, 'tasks/index.html', {'grouped_tasks': date_range})
 

@@ -1,45 +1,28 @@
-body{
-    font-family: onest;
-    background-color: #e6eff7;
-    color: #3a2d34;
-}
-a{
-    text-decoration: none;
-
-}
 
 .task_area{
-    margin-left: 200px;
+    margin-left: 20px;
 }
-
-
 
 .search-container {
     display: flex;
     align-items: center;
     position: relative;
-    padding: 20px;
-
+    margin-bottom: 20px;
+    margin-top: 30px;
 }
 
 .search-input {
     flex-grow: 1;
     padding: 10px;
-    margin-right: 10px; /* Отступ между полем ввода и выпадающим меню */
-    border: 1px solid #beaedb;
-    border-radius: 5px;
-    font-family: onest;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 1000px;
 }
 
-.search-button{
-    position: relative;
-    margin-left: 10px;
-    border:  1px solid #beaedb;
-    border-radius: 5px;
-    background-color: white;
-    cursor: pointer;
-    font-family: onest;
-    padding: 10px;
+.search-btn {
+    margin-right: 20px;
+    width: 100px;
 }
 
 #search-results {
@@ -48,15 +31,12 @@ a{
     margin-top: 40px;
     display: none;
     background-color: white;
-    font-family:onest;
     position: absolute;
     z-index: 1000;
     width: 80%;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     max-height: 100px;
     overflow-y: auto;
-
-
 }
 
 .search-result {
@@ -69,28 +49,33 @@ a{
 }
 
 .search-result-date {
-    color: #666;
+    color: var(--text-color2);
 }
 
 .filter-container {
     position: relative;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .filter-select {
-    padding: 10px; /* Отступы внутри выпадающего меню */
-    border: 1px solid #beaedb; /* Рамка выпадающего меню */
-    border-radius: 5px; /* Закругление углов выпадающего меню */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     cursor: pointer;
-    font-family: onest;
-    color: #3a2d34;
+    width: 200px;
+}
+
+.filter {
+    margin-right: 10px;
 }
 
 .notification-container {
     position: relative;
     margin-left: 7px;
-    cursor: pointer; /* Указатель при наведении */
+    cursor: pointer;
 }
 
 .notification-icon {
@@ -112,15 +97,15 @@ a{
 }
 
 .notification-popup {
-    display: none; /* Изначально скрыто */
-    width: 300px; /* Установите нужную ширину */
-    background-color: white; /* Цвет фона */
-    border: 1px solid #ccc; /* Граница */
-    border-radius: 5px; /* Закругление углов */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень */
-    padding: 10px; /* Отступы */
+    display: none;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
     right: 0;
     top: 100%;
-    z-index: 1000; /* Уровень наложения */
+    z-index: 1000;
     position: absolute;
 }
