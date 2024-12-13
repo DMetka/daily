@@ -1,3 +1,71 @@
-.area{
-    margin-left: 200px;
+.main-area {
+    margin-left: 20px ;
+    margin-top: 30px;
+}
+
+.area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.input-folder {
+    border-radius: 10px;
+    border: 1px solid #e6e9f4;
+    display: block;
+    font-size: .875rem;
+    width: 300px;
+    outline: none;
+    height: 40px;
+    padding: 0 15px;
+}
+
+.create-folder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-folder {
+    width: 200px;
+    height: 40px;
+}
+
+.folder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+.task-item {
+    cursor: pointer;
+    padding: 15px;
+    background-color: var(--main2-color);
+    border-radius: 8px;
+    width: 700px;
+}
+
+.folder-contents {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.task-item:hover {
+    border: 1px solid #ccc;
 }

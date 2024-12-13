@@ -51,11 +51,11 @@ function getCookie(name) {
 
 function loadFolderContents(folderId) {
     const folderContents = document.getElementById(`folder-${folderId}-contents`);
-    if (folderContents.style.display === 'block') {
+    if (folderContents.style.display === 'flex') {
         folderContents.style.display = 'none';
         return;
     }
-    folderContents.style.display = 'block';
+    folderContents.style.display = 'flex';
     folderContents.innerHTML = '';
     fetch(`/get_folder_contents/${folderId}/`)
         .then(response => {
@@ -72,7 +72,7 @@ function loadFolderContents(folderId) {
                     const taskElement = document.createElement('div');
                     taskElement.classList.add('task-item');
                     taskElement.innerHTML = `
-                        <h3 class="task-title">${task.title}</h3>
+                        <h2 class="task-title">${task.title}</h2>
                     `;
                     taskElement.addEventListener('click', () => {
                         alert(`Вы выбрали задачу: ${task.title}${task.deadline ? `\nДедлайн: ${task.deadline}` : ''}`);

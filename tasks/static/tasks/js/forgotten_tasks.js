@@ -2,12 +2,12 @@ import { open } from './open_task_form.js'
 export function get_forgotten_tasks() {
     const forgottenContainer = document.querySelector('.list_of_forgotten_tasks');
 
-    if (forgottenContainer.style.display === 'block') {
+    if (forgottenContainer.style.display === 'flex') {
         forgottenContainer.style.display = 'none';
         return;
     }
 
-    forgottenContainer.style.display = 'block';
+    forgottenContainer.style.display = 'flex';
     forgottenContainer.innerHTML = '';
 
     fetch(`/forgotten_task/`)
@@ -27,8 +27,8 @@ export function get_forgotten_tasks() {
                     const taskElement = document.createElement('div');
                     taskElement.classList.add('forgotten-task');
                     taskElement.innerHTML = `
-                        <h3 class="forgottens">${task.title}</h3>
-                        <small class="forgottens">Дедлайн истек: ${new Date(task.deadline).toLocaleDateString('ru-RU')}</small>
+                        <h2 class="forgottens">${task.title}</h2>
+                        <h3>Дедлайн истек: ${new Date(task.deadline).toLocaleDateString('ru-RU')}<h3>
                     `;
                     console.log(task)
                     taskElement.addEventListener('click', () => {

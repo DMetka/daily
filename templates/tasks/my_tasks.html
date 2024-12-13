@@ -11,28 +11,21 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-area"><!--Вся страница-->
-    <div class="side_left_menu"><!--Боковое меню-->
-        <div class="user">
-            <h3>Профиль</h3>
-        </div>
-        <button class="btn_left"><a href="{% url 'home' %}">На главную</a></button><!--Кнопка, ведет к моим задачам-->
-        <button class="btn_left"><a href="{% url 'my_folders' %}">Мои папки</a></button>
-    </div>
+<div class="main-area">
     <div class="area">
-        <div class="my_task_area">
-            <div class="month-view">
-                <h2>Список задач на неделю</h2>
-                <button id="prevMonth" onclick="changeMonth(-1)">&#9664;</button>
+    <h1>Список задач на месяц</h1>
+        <div class="my_task_area_tittle">
+            <div class="btn-data">
+                <button id="prevMonth" onclick="changeMonth(-1)" class="btn">&#9664;</button>
                 <span id="monthRange">Loading...</span>
-                <button id="nextMonth" onclick="changeMonth(1)">&#9654;</button>
+                <button id="nextMonth" onclick="changeMonth(1)" class="btn">&#9654;</button>
             </div>
         </div>
         <div class="list_of_tasks">
             <!--Автоматическое добавление задач-->
         </div>
         <div class="list_of_forgotten_tasks" style="display: none;"></div>
-        <button id="forgotten" onclick="get_forgotten_tasks()">&#9827;</button>
+        <button id="forgotten" onclick="get_forgotten_tasks()" class="btn">&#9827;</button>
         <div id="forgotten-container"></div>
 
         <div class="task">
