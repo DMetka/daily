@@ -90,43 +90,68 @@ def go_back_to_index(request):
 @login_required
 def sort(request):
     user = request.user
+    start_date_str = request.GET.get('start_date')
+    end_date_str = request.GET.get('end_data')
+
+    if not start_date_str or not end_date_str:
+        return JsonResponse({'error': 'start_date and end_date are required'}, status=400)
+
+    try:
+        start = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid date format. Use YYYY-MM-DD'}, status=400)
+
+    tasks = Tasks.objects.filter(data_add__range=[start, end], user=user).values()
     sort_by = request.GET.get('sort_by', 'priority')
     if sort_by == 'priority':
-        tasks = Tasks.objects.filter(user=user).order_by('priority').values()
+        tasks = tasks.filter(user=user).order_by('priority').values()
         return JsonResponse({'tasks': list(tasks)})
     if sort_by == 'status':
-        tasks = Tasks.objects.filter(user=user).order_by('is_completed').values()
+        tasks = tasks.filter(user=user).order_by('is_completed').values()
         return JsonResponse({'tasks': list(tasks)})
     if sort_by == 'title':
-        tasks = Tasks.objects.filter(user=user).order_by('title').values()
+        tasks = tasks.filter(user=user).order_by('title').values()
         return JsonResponse({'tasks': list(tasks)})
     if sort_by == 'folders':
-        tasks = Tasks.objects.filter(user=user).order_by('folders').values()
+        tasks = tasks.filter(user=user).order_by('folders').values()
         return JsonResponse({'tasks': list(tasks)})
     if sort_by == 'deadline':
-        tasks = Tasks.objects.filter(user=user).order_by('deadline').values()
+        tasks = tasks.filter(user=user).order_by('deadline').values()
         return JsonResponse({'tasks': list(tasks)})
 
 
 @login_required
 def filter(request):
     user = request.user
+    start_date_str = request.GET.get('start_date')
+    end_date_str = request.GET.get('end_data')
+
+    if not start_date_str or not end_date_str:
+        return JsonResponse({'error': 'start_date and end_date are required'}, status=400)
+
+    try:
+        start = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'error': 'Invalid date format. Use YYYY-MM-DD'}, status=400)
+    tasks = Tasks.objects.filter(data_add__range=[start, end], user=user).values()
     filter_by = request.GET.get('filter_by', '')
     if filter_by == 'priority':
         priority = request.GET.get('priority')
-        tasks = Tasks.objects.all().filter(priority=priority, user=user).values()
+        tasks = tasks.filter(priority=priority, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
     if filter_by == 'deadline':
         deadline = request.GET.get('deadline')
-        tasks = Tasks.objects.all().filter(deadline__startswith=deadline, user=user).values()
+        tasks = tasks.filter(deadline__startswith=deadline, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
     if filter_by == 'folders':
         folders = request.GET.get('folders')
-        tasks = Tasks.objects.all().filter(folders=folders, user=user).values()
+        tasks = tasks.filter(folders=folders, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
     if filter_by == 'status':
         is_completed = request.GET.get('is_completed')
-        tasks = Tasks.objects.all().filter(is_completed=is_completed, user=user).values()
+        tasks = tasks.filter(is_completed=is_completed, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
 
 
