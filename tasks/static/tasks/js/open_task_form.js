@@ -120,7 +120,7 @@ export function Main(task) {
     });
 
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.classList.contains('list_task')) {
+        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.closest('.list_task')) {
             closeForm();
         }
     });
