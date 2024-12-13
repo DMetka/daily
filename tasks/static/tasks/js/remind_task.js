@@ -1,6 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    updateNotificationBadge();
-});
+document.addEventListener('DOMContentLoaded', updateNotificationBadge);
 
 
 function updateNotificationBadge() {
