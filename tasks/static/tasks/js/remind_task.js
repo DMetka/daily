@@ -27,13 +27,13 @@ function toggleNotifications() {
     const popup = document.getElementById('notificationPopup');
 
     // Если уведомления уже видимы, скрываем их
-    if (popup.style.display === 'block') {
+    if (popup.style.display === 'flex') {
         popup.style.display = 'none';
         return;
     }
 
     // Иначе получаем данные с сервера
-    fetch('remind_task')
+    fetch('remind_task/')
         .then(response => response.json())
         .then(data => {
             const reminders = data.reminders;
@@ -46,7 +46,7 @@ function toggleNotifications() {
 
             // Обновляем содержимое попапа
             popup.innerHTML = popupContent || '<p>Нет новых напоминаний</p>';
-            popup.style.display = 'block';
+            popup.style.display = 'flex';
 
             // Показываем бейджик, если есть уведомления
             const badge = document.getElementById('notificationBadge');

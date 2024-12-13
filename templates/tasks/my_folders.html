@@ -12,31 +12,26 @@
 
 {% block content %}
 <div class="main-area">
-    <div class="side_left_menu">
-        <div class = "user">
-            <h3>Профиль</h3>
-        </div>
-        <button class = "btn_left"><a href="{% url 'my_tasks' %}">Мои задачи</a></button>
-         <button class = "btn_left"><a href="{% url 'home' %}">На главную</a></button>
-    </div>
     <div class="area">
-    <h2>Мои папки</h2>
-    <button id="create-folder-button">Создать папку</button>
-    <input type="text" id="folder-title" placeholder="Введите название папки" />
-    <div id="response-message"></div>
-
-
-        <div class="folders">
-            <ul id="folder-list">
-                {% for folder in folders %}
-                <li>
-                    <button onclick="loadFolderContents({{ folder.id }})">{{ folder.title }}</button>
-                    <div id="folder-{{ folder.id }}-contents" class="folder-contents" style="display:none;">
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
+        <h1>Мои папки</h1>
+        <div class="create-folder">
+            <input class="input-folder" type="text" id="folder-title" placeholder="Введите название папки" />
+            <button id="create-folder-button" class="btn btn-folder">Создать папку</button>
         </div>
+        <div id="response-message"></div>
+
+
+            <div class="folders">
+                <ul id="folder-list" class="folder-list">
+                    {% for folder in folders %}
+                    <li>
+                        <button onclick="loadFolderContents({{ folder.id }})" class="btn btn-folder">{{ folder.title }}</button>
+                        <div id="folder-{{ folder.id }}-contents" class="folder-contents" style="display:none;">
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
     </div>
 </div>
 {% endblock %}

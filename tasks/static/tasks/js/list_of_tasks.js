@@ -21,8 +21,8 @@ function loadTasks() {
                     const taskElement = document.createElement('div');
                     taskElement.classList.add('list_task');
                     taskElement.innerHTML = `
-                        <h3 class="list_of_task">${task.title}</h3>
-                        <small class="list_of_task">Дедлайн: ${task.deadline}</small>
+                        <h2 class="list_of_task">${task.title}</h2>
+                        <h3>Дедлайн: ${task.deadline}</h3>
                     `;
                     taskElement.addEventListener('click', () => {
                         open(task)
