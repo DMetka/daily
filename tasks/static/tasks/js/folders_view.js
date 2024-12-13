@@ -5,12 +5,11 @@ document.getElementById('create-folder-button').addEventListener('click', functi
         return;
     }
 
-    // Отправка AJAX-запроса
-    fetch('add_folder/', {  // Убедитесь, что URL соответствует вашему маршруту
+    fetch('add_folder/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')  // Если вы используете CSRF-токены
+            'X-CSRFToken': getCookie('csrftoken')
         },
         body: JSON.stringify({ title: title })
     })
@@ -24,7 +23,6 @@ document.getElementById('create-folder-button').addEventListener('click', functi
     })
     .then(data => {
         document.getElementById('response-message').innerText = 'Папка успешно создана';
-        // Очистить поле ввода
         document.getElementById('folder-title').value = '';
     })
     .catch(error => {
