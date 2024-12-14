@@ -2,12 +2,12 @@
 
 {% load static %}
 
-{% block head %}
+{% block styles %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 {% block title %} Регистрация {% endblock %}
 
-{% block body %}
+{% block content %}
     <div class="enter">
         <h1>Регистрация</h1>
         <form method="post">
@@ -44,7 +44,7 @@
                     <div class="error-container">{{ form.non_field_errors }}</div>
             {% endif %}
 
-            <button type="submit">Зарегистрироваться</button>
+            <button type="submit" class="btn btn-enter">Зарегистрироваться</button>
         </form>
 
         <div class="text">
