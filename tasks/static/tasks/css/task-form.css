@@ -173,7 +173,7 @@
 }
 
 .btn-container {
-    display: flex; /* Используем Flexbox для расположения кнопок в ряд */
-    justify-content: space-around; /* Распределяем пространство между кнопками */
-    margin-top: 20px; /* Отступ сверху для кнопок */
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
 }
