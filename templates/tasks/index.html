@@ -66,7 +66,19 @@
                         <input type="checkbox" id="taskCompleted">
                         Выполнено
                     </label>
-                    <button class="btn">Старт</button>
+                    <button class="btn" id = "startButton">Старт</button>
+                </div>
+                <div id="timerModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" id="closeButton">&times;</span>
+                        <h2>Таймер</h2>
+                        <div id="timer">00:00</div>
+                        <div class="btn-container">
+                            <button class="btn" id="startTimerButton">Старт</button>
+                            <button class="btn" id="stopButton">Стоп</button>
+                            <button class="btn" id="resetButton">Сброс</button>
+                        </div>
+                    </div>
                 </div>
                 <input type="text" placeholder="Название задачи" id="taskName">
                 <div class="deadline" >
@@ -114,5 +126,6 @@
 <script src="{% static 'tasks/js/calendar.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
 <script src="{% static 'tasks/js/search_tasks.js' %}"></script>
+<script src="{% static 'tasks/js/timer.js' %}"></script>
 
 {% endblock %}

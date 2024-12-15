@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 #TaskForm .task-status input[type="checkbox"] {
@@ -132,4 +133,47 @@
 #foldersList li:active {
     background-color: #dcdcdc;
     color: #483d8b;
+}
+
+
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Фиксированное позиционирование */
+    z-index: 1000; /* Убедитесь, что модальное окно поверх других элементов */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* Центрирование модального окна */
+    padding: 20px;
+    border-radius: 8px; /* Закругленные углы */
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для эффекта поднятия */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-container {
+    display: flex; /* Используем Flexbox для расположения кнопок в ряд */
+    justify-content: space-around; /* Распределяем пространство между кнопками */
+    margin-top: 20px; /* Отступ сверху для кнопок */
 }
