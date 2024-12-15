@@ -80,13 +80,34 @@ export function Main(task) {
             return;
         }
 
+        console.log(selectedDate)
+
+        const months = {
+            "января": "01", "февраля": "02", "марта": "03", "апреля": "04",
+            "мая": "05", "июня": "06", "июля": "07", "августа": "08",
+            "сентября": "09", "октября": "10", "ноября": "11", "декабря": "12"
+        };
+
+        // Разбиваем строку на части
+        const parts = selectedDate.split(" ");
+
+        // Извлекаем день, месяц и год
+        const day = parts[0];  // "16"
+        const month = months[parts[1]];  // "декабря" => "12"
+        const year = parts[2];  // "2024"
+
+        // Формируем дату в нужном формате
+        const formattedDate = `${day}.${month}.${year}`;
+
+        console.log(formattedDate);  // Выведет: "16.12.2024"
+
         const taskData = {
             title: titleInput.value,
             full_text: fullTextInput.value,
             data_create: new Date().toISOString(),
             data_complete: null,
-            data_add: selectedDate,
-            deadline: deadlineInput.value,
+            data_add: formattedDate,
+            deadline: formatDate1(deadlineInput.value),
             folder: folderInput.value,
             priority: parseInt(priorityInput.value) || 2,
             is_completed: completedInput.checked
@@ -118,6 +139,26 @@ export function Main(task) {
             console.error('There has been a problem with your fetch operation:', error);
         });
     });
+
+    // Преобразование названия месяца в номер (1-12)
+    function getMonthNumber(monthName) {
+        const months = {
+            "января": "01",
+            "февраля": "02",
+            "марта": "03",
+            "апреля": "04",
+            "мая": "05",
+            "июня": "06",
+            "июля": "07",
+            "августа": "08",
+            "сентября": "09",
+            "октября": "10",
+            "ноября": "11",
+            "декабря": "12"
+        };
+        return months[monthName.toLowerCase()];
+    }
+
 
     document.addEventListener("click", function(event) {
         if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.closest('.list_task')) {
@@ -180,3 +221,19 @@ export function open(task = null, date = null) {
 
 document.addEventListener("DOMContentLoaded", Main);
 
+function formatDate1(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+
+function formatDate(date) {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}.${month}.${year}`;
+}
