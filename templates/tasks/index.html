@@ -55,6 +55,11 @@
                                         data-task-priority="{{ task.priority }}"
                                         data-task-is-completed="{{ task.is_completed }}">
                                        <h2>{{ task.title }}</h2>
+                                       <div class="delete-button-container">
+                                           <button class="delete-task-button" data-task-id="{{ task.id }}">
+                                               <img src="{% static 'tasks/img/delete.svg' %}" alt="Удалить" class="delete-icon">
+                                           </button>
+                                       </div>
                                    </div>
                                 {% endfor %}
                             </div>
@@ -134,7 +139,7 @@
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
 <script src="{% static 'tasks/js/search_tasks.js' %}"></script>
 <script src="{% static 'tasks/js/timer.js' %}"></script>
-
+<script src="{% static 'tasks/js/delete.js' %}"></script>
 <script type="module" src="{% static 'tasks/js/taskHandlers.js' %}"></script>
 <script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}
