@@ -87,26 +87,32 @@ export function Main(task) {
             "мая": "05", "июня": "06", "июля": "07", "августа": "08",
             "сентября": "09", "октября": "10", "ноября": "11", "декабря": "12"
         };
-
-        // Разбиваем строку на части
+        if (selectedDate !== null){
         const parts = selectedDate.split(" ");
 
-        // Извлекаем день, месяц и год
         const day = parts[0];  // "16"
         const month = months[parts[1]];  // "декабря" => "12"
         const year = parts[2];  // "2024"
 
-        // Формируем дату в нужном формате
         const formattedDate = `${day}.${month}.${year}`;
-
-        console.log(formattedDate);  // Выведет: "16.12.2024"
-
         const taskData = {
             title: titleInput.value,
             full_text: fullTextInput.value,
             data_create: new Date().toISOString(),
             data_complete: null,
             data_add: formattedDate,
+            deadline: formatDate1(deadlineInput.value),
+            folder: folderInput.value,
+            priority: parseInt(priorityInput.value) || 2,
+            is_completed: completedInput.checked
+        };
+        }
+        const taskData = {
+            title: titleInput.value,
+            full_text: fullTextInput.value,
+            data_create: new Date().toISOString(),
+            data_complete: null,
+            data_add: selectedDate,
             deadline: formatDate1(deadlineInput.value),
             folder: folderInput.value,
             priority: parseInt(priorityInput.value) || 2,
