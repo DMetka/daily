@@ -1,5 +1,6 @@
 let selectedDate = null
 let currentTaskId = null
+let isFormOpen = false;
 
 export function Main(task) {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
@@ -14,10 +15,14 @@ export function Main(task) {
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
 
+
+
+
     function closeForm() {
         TaskForm.style.transform = 'translateX(100%)';
         setTimeout(() => {
             TaskForm.style.display = 'none';
+            isFormOpen = false;
         }, 300);
     }
 
@@ -137,10 +142,10 @@ export function Main(task) {
             }
             return response.json();
         })
-        .then(data => {
-            console.log(data.message);
-            closeForm();
-        })
+        //.then(data => {
+        //    console.log(data.message);
+        //    closeForm();
+        //})
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
         });
@@ -167,7 +172,12 @@ export function Main(task) {
 
 
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.closest('.list_task')) {
+         if (isFormOpen && !TaskForm.contains(event.target) &&
+            !event.target.closest('.btn-add-task') &&
+            !event.target.closest('.my_task_area') &&
+            !event.target.closest('.list_task') &&
+            !event.target.closest('.forgotten-task')) {
+            console.log("click");
             closeForm();
         }
     });
@@ -196,8 +206,8 @@ export function open(task = null, date = null) {
     const folderInput = document.getElementById("taskFolder");
     const priorityInput = document.getElementById("taskPriority");
     const completedInput = document.getElementById("taskCompleted");
-
     TaskForm.style.display = 'flex';
+
     if (date) {
         selectedDate = date;
     }
@@ -214,6 +224,7 @@ export function open(task = null, date = null) {
         folderInput.value = task.folder;
         priorityInput.value = task.priority;
         completedInput.checked = task.is_completed;
+        console.log('Opening task with data:', task);
     } else {
         currentTaskId = null;
         titleInput.value = '';
@@ -223,9 +234,12 @@ export function open(task = null, date = null) {
         priorityInput.value = '';
         completedInput.checked = false;
     }
+    isFormOpen = true;
 }
 
 document.addEventListener("DOMContentLoaded", Main);
+
+
 
 function formatDate1(date) {
     const d = new Date(date);
@@ -243,3 +257,5 @@ function formatDate(date) {
     const year = d.getFullYear();
     return `${day}.${month}.${year}`;
 }
+
+

@@ -48,7 +48,14 @@
                             <button class="btn btn-add-task">Добавить задачу</button>
                             <div class="tasks-container">
                                 {% for task in info.tasks %}
-                                    <h2 class="my_task_area">{{ task.title }}</h2>
+                                   <div class="my_task_area" data-task-id="{{ task.id }}"
+                                        data-task-full-text="{{ task.full_text }}"
+                                        data-task-deadline="{{ task.deadline|date:'Y-m-d' }}"
+                                        data-task-folder="{{ task.folder }}"
+                                        data-task-priority="{{ task.priority }}"
+                                        data-task-is-completed="{{ task.is_completed }}">
+                                       <h2>{{ task.title }}</h2>
+                                   </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -114,5 +121,5 @@
 <script src="{% static 'tasks/js/calendar.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
 <script src="{% static 'tasks/js/search_tasks.js' %}"></script>
-
+<script type="module" src="{% static 'tasks/js/taskHandlers.js' %}"></script>
 {% endblock %}
