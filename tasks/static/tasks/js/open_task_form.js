@@ -1,5 +1,6 @@
 let selectedDate = null
 let currentTaskId = null
+let isFormOpen = false;
 
 export function Main(task) {
     const addTaskButtons = document.querySelectorAll(".add-task-btn");
@@ -14,10 +15,14 @@ export function Main(task) {
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
 
+
+
+
     function closeForm() {
         TaskForm.style.transform = 'translateX(100%)';
         setTimeout(() => {
             TaskForm.style.display = 'none';
+            isFormOpen = false;
         }, 300);
     }
 
@@ -31,7 +36,7 @@ export function Main(task) {
     });
 
     function loadFolders() {
-        fetch('get_all_folders/', {
+        fetch(foldersUrl, {
             method: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
@@ -80,13 +85,38 @@ export function Main(task) {
             return;
         }
 
+        const months = {
+            "января": "01", "февраля": "02", "марта": "03", "апреля": "04",
+            "мая": "05", "июня": "06", "июля": "07", "августа": "08",
+            "сентября": "09", "октября": "10", "ноября": "11", "декабря": "12"
+        };
+        if (selectedDate !== null){
+        const parts = selectedDate.split(" ");
+
+        const day = parts[0];  // "16"
+        const month = months[parts[1]];  // "декабря" => "12"
+        const year = parts[2];  // "2024"
+
+        const formattedDate = `${day}.${month}.${year}`;
+        const taskData = {
+            title: titleInput.value,
+            full_text: fullTextInput.value,
+            data_create: new Date().toISOString(),
+            data_complete: null,
+            data_add: formattedDate,
+            deadline: formatDate1(deadlineInput.value),
+            folder: folderInput.value,
+            priority: parseInt(priorityInput.value) || 2,
+            is_completed: completedInput.checked
+        };
+        }
         const taskData = {
             title: titleInput.value,
             full_text: fullTextInput.value,
             data_create: new Date().toISOString(),
             data_complete: null,
             data_add: selectedDate,
-            deadline: deadlineInput.value,
+            deadline: formatDate1(deadlineInput.value),
             folder: folderInput.value,
             priority: parseInt(priorityInput.value) || 2,
             is_completed: completedInput.checked
@@ -119,8 +149,37 @@ export function Main(task) {
         });
     });
 
+    // Преобразование названия месяца в номер (1-12)
+    function getMonthNumber(monthName) {
+        const months = {
+            "января": "01",
+            "февраля": "02",
+            "марта": "03",
+            "апреля": "04",
+            "мая": "05",
+            "июня": "06",
+            "июля": "07",
+            "августа": "08",
+            "сентября": "09",
+            "октября": "10",
+            "ноября": "11",
+            "декабря": "12"
+        };
+        return months[monthName.toLowerCase()];
+    }
+
+
     document.addEventListener("click", function(event) {
-        if (!TaskForm.contains(event.target) && !event.target.classList.contains("btn-add-task") && !event.target.closest('.list_task')) {
+        if (
+            isFormOpen &&
+            !TaskForm.contains(event.target) &&
+            !event.target.closest('.btn-add-task') &&
+            !event.target.closest('.my_task_area') &&
+            !event.target.closest('.list_task') &&
+            !event.target.closest('.forgotten-task') &&
+            !event.target.closest('.task-item') // Добавлено условие для класса task-item
+        ) {
+            console.log("click");
             closeForm();
         }
     });
@@ -149,8 +208,8 @@ export function open(task = null, date = null) {
     const folderInput = document.getElementById("taskFolder");
     const priorityInput = document.getElementById("taskPriority");
     const completedInput = document.getElementById("taskCompleted");
-
     TaskForm.style.display = 'flex';
+
     if (date) {
         selectedDate = date;
     }
@@ -167,6 +226,7 @@ export function open(task = null, date = null) {
         folderInput.value = task.folder;
         priorityInput.value = task.priority;
         completedInput.checked = task.is_completed;
+        console.log('Opening task with data:', task);
     } else {
         currentTaskId = null;
         titleInput.value = '';
@@ -176,7 +236,28 @@ export function open(task = null, date = null) {
         priorityInput.value = '';
         completedInput.checked = false;
     }
+    isFormOpen = true;
 }
 
 document.addEventListener("DOMContentLoaded", Main);
+
+
+
+function formatDate1(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+
+function formatDate(date) {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}.${month}.${year}`;
+}
+
 
