@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="main-area">
     <div class="area">
     <h1>Список задач на месяц</h1>
@@ -21,6 +22,28 @@
                 <button id="nextMonth" onclick="changeMonth(1)" class="btn">&#9654;</button>
             </div>
         </div>
+            <div class="controls-container">
+                <div class="sort-container">
+                    <label for="sortSelect" class="filter">Сортировка:</label>
+                    <select id="sortSelect" class="sort-select btn">
+                        <option value="">Выберите сортировку</option>
+                        <option value="status">Статус</option>
+                        <option value="priority">Приоритет</option>
+                        <option value="deadline">Дедлайн</option>
+                        <option value="title">Название</option>
+                        <option value="folders">Папки</option>
+                    </select>
+                </div>
+                <div class="filter-container">
+                    <label for="filterSelect" class="sort">Фильтр:</label>
+                    <select id="filterSelect" class="filter-select btn">
+                        <option value="">Выберите фильтр</option>
+                        <option value="status">Статус</option>
+                        <option value="priority">Приоритет</option>
+                        <option value="deadline">Дедлайн</option>
+                    </select>
+                </div>
+            </div>
         <div class="list_of_tasks">
             <!--Автоматическое добавление задач-->
         </div>
@@ -83,6 +106,7 @@
 <script src="{% static 'tasks/js/forgotten_tasks.js' %}" type="module"></script>
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar_for_month.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/sort.js' %}"></script>
 <script src="{% static 'tasks/js/list_of_tasks.js' %}" type="module"></script>
 <script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}
