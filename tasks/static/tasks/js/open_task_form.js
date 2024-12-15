@@ -1,5 +1,5 @@
-let selectedDate = null
-let currentTaskId = null
+let selectedDate = null;
+let currentTaskId = null;
 let isFormOpen = false;
 
 export function Main(task) {
@@ -14,9 +14,6 @@ export function Main(task) {
     const completedInput = document.getElementById("taskCompleted");
     const chooseFolderBtn = document.getElementById("chooseFolderBtn");
     const foldersList = document.getElementById("foldersList");
-
-
-
 
     function closeForm() {
         TaskForm.style.transform = 'translateX(100%)';
@@ -90,37 +87,37 @@ export function Main(task) {
             "мая": "05", "июня": "06", "июля": "07", "августа": "08",
             "сентября": "09", "октября": "10", "ноября": "11", "декабря": "12"
         };
+        let taskData;
         if (selectedDate !== null){
-        const parts = selectedDate.split(" ");
-
-        const day = parts[0];  // "16"
-        const month = months[parts[1]];  // "декабря" => "12"
-        const year = parts[2];  // "2024"
-
-        const formattedDate = `${day}.${month}.${year}`;
-        const taskData = {
-            title: titleInput.value,
-            full_text: fullTextInput.value,
-            data_create: new Date().toISOString(),
-            data_complete: null,
-            data_add: formattedDate,
-            deadline: formatDate1(deadlineInput.value),
-            folder: folderInput.value,
-            priority: parseInt(priorityInput.value) || 2,
-            is_completed: completedInput.checked
-        };
+            const parts = selectedDate.split(" ");
+            const day = parts[0];
+            const month = months[parts[1]];
+            const year = parts[2];
+            const formattedDate = `${day}.${month}.${year}`;
+            console.log(formattedDate);
+            taskData = {
+                title: titleInput.value,
+                full_text: fullTextInput.value,
+                data_create: new Date().toISOString(),
+                data_complete: null,
+                data_add: formattedDate,
+                deadline: formatDate1(deadlineInput.value),
+                folder: folderInput.value,
+                priority: parseInt(priorityInput.value) || 2,
+                is_completed: completedInput.checked
+            };
+        }else{
+            taskData = {
+                title: titleInput.value,
+                full_text: fullTextInput.value,
+                data_create: new Date().toISOString(),
+                data_complete: null,
+                deadline: formatDate1(deadlineInput.value),
+                folder: folderInput.value,
+                priority: parseInt(priorityInput.value) || 2,
+                is_completed: completedInput.checked
+            };
         }
-        const taskData = {
-            title: titleInput.value,
-            full_text: fullTextInput.value,
-            data_create: new Date().toISOString(),
-            data_complete: null,
-            data_add: selectedDate,
-            deadline: formatDate1(deadlineInput.value),
-            folder: folderInput.value,
-            priority: parseInt(priorityInput.value) || 2,
-            is_completed: completedInput.checked
-        };
 
         let url = currentTaskId ? `/edit_task/${currentTaskId}/` : '/add_task/';
         let method = currentTaskId ? 'PUT' : 'POST';
@@ -149,25 +146,6 @@ export function Main(task) {
         });
     });
 
-    // Преобразование названия месяца в номер (1-12)
-    function getMonthNumber(monthName) {
-        const months = {
-            "января": "01",
-            "февраля": "02",
-            "марта": "03",
-            "апреля": "04",
-            "мая": "05",
-            "июня": "06",
-            "июля": "07",
-            "августа": "08",
-            "сентября": "09",
-            "октября": "10",
-            "ноября": "11",
-            "декабря": "12"
-        };
-        return months[monthName.toLowerCase()];
-    }
-
 
     document.addEventListener("click", function(event) {
         if (
@@ -177,7 +155,7 @@ export function Main(task) {
             !event.target.closest('.my_task_area') &&
             !event.target.closest('.list_task') &&
             !event.target.closest('.forgotten-task') &&
-            !event.target.closest('.task-item') // Добавлено условие для класса task-item
+            !event.target.closest('.task-item')
         ) {
             console.log("click");
             closeForm();
