@@ -84,5 +84,5 @@
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar_for_month.js' %}"></script>
 <script src="{% static 'tasks/js/list_of_tasks.js' %}" type="module"></script>
-
+<script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}

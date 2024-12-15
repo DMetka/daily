@@ -25,7 +25,7 @@
                 <ul id="folder-list" class="folder-list">
                     {% for folder in folders %}
                     <li>
-                        <button onclick="loadFolderContents({{ folder.id }})" class="btn btn-folder">{{ folder.title }}</button>
+                        <button class="btn btn-folder" data-folder-id="{{ folder.id }}">{{ folder.title }}</button>
                         <div id="folder-{{ folder.id }}-contents" class="folder-contents" style="display:none;">
                         </div>
                     </li>
@@ -33,12 +33,57 @@
                 </ul>
             </div>
     </div>
+    <div class="task">
+        <div class="hidden" id="TaskForm">
+            {% csrf_token %}
+            <div class="task-status">
+                <label for="taskCompleted">
+                    <input type="checkbox" id="taskCompleted">
+                    Выполнено
+                </label>
+                <button class="btn">Старт</button>
+            </div>
+            <input type="text" placeholder="Название задачи" id="taskName">
+            <div class="deadline" >
+                <p>Крайний срок выполнения задачи</p>
+                <input type="date" id="taskDate">
+            </div>
+            <div class="priority">
+                <p class="priority-text btn"> Приоритет задачи</p>
+                <select id="taskPriority" class="priority-btn btn">
+                    <option value=3>Низкий</option>
+                    <option value=2>Средний</option>
+                    <option value=1>Высокий</option>
+                </select>
+            </div>
+            <textarea placeholder="Заметка" id = "taskFullText"></textarea>
+            <div>
+                <button id="chooseFolderBtn" type="button" class="btn">Выберите папку</button>
+                <ul id="foldersList" style="display: none; position: absolute; list-style: none; padding: 0; margin: 0;">
+                </ul>
+            </div>
+            <select id="taskFolder" style="display: none;">
+                <option value="">Выберите папку</option>
+            </select>
+            <div class="subtask-container">
+                <div class="subtask">
+                    <input type="text" placeholder="Подзадача">
+                </div>
+                <div class="button-subtask-container">
+                    <button id="addSubtask" class="circle-btn">+</button>
+                    <button id="removeSubtask" class="circle-btn">-</button>
+                </div>
+            </div>
+
+            <button id = "SaveTask" class="btn">Сохранить</button>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 
 {% block scripts %}
-
-<script src="{% static 'tasks/js/folders_view.js' %}"></script>
-
+<script type="module" src="{% static 'tasks/js/folders_view.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/open_task_form.js' %}"></script>
+<script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}

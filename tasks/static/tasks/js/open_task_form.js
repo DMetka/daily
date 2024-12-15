@@ -36,7 +36,7 @@ export function Main(task) {
     });
 
     function loadFolders() {
-        fetch('get_all_folders/', {
+        fetch(foldersUrl, {
             method: 'GET',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
@@ -84,8 +84,6 @@ export function Main(task) {
             alert("Пожалуйста, заполните все обязательные поля.");
             return;
         }
-
-        console.log(selectedDate)
 
         const months = {
             "января": "01", "февраля": "02", "марта": "03", "апреля": "04",
@@ -142,10 +140,10 @@ export function Main(task) {
             }
             return response.json();
         })
-        //.then(data => {
-        //    console.log(data.message);
-        //    closeForm();
-        //})
+        .then(data => {
+            console.log(data.message);
+            closeForm();
+        })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
         });
@@ -172,11 +170,15 @@ export function Main(task) {
 
 
     document.addEventListener("click", function(event) {
-         if (isFormOpen && !TaskForm.contains(event.target) &&
+        if (
+            isFormOpen &&
+            !TaskForm.contains(event.target) &&
             !event.target.closest('.btn-add-task') &&
             !event.target.closest('.my_task_area') &&
             !event.target.closest('.list_task') &&
-            !event.target.closest('.forgotten-task')) {
+            !event.target.closest('.forgotten-task') &&
+            !event.target.closest('.task-item') // Добавлено условие для класса task-item
+        ) {
             console.log("click");
             closeForm();
         }

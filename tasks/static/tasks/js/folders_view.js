@@ -1,3 +1,4 @@
+import { open } from './open_task_form.js'
 document.getElementById('create-folder-button').addEventListener('click', function() {
     const title = document.getElementById('folder-title').value;
     if (!title) {
@@ -46,6 +47,15 @@ function getCookie(name) {
     return cookieValue;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const folderButtons = document.querySelectorAll('.btn-folder');
+    folderButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const folderId = button.dataset.folderId;
+            loadFolderContents(folderId);
+        });
+    });
+});
 
 function loadFolderContents(folderId) {
     const folderContents = document.getElementById(`folder-${folderId}-contents`);
@@ -73,7 +83,7 @@ function loadFolderContents(folderId) {
                         <h2 class="task-title">${task.title}</h2>
                     `;
                     taskElement.addEventListener('click', () => {
-                        alert(`Вы выбрали задачу: ${task.title}${task.deadline ? `\nДедлайн: ${task.deadline}` : ''}`);
+                        open(task)
                     });
                     folderContents.appendChild(taskElement);
                 });
