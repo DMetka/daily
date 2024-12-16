@@ -33,7 +33,8 @@
                 </ul>
             </div>
     </div>
-    <div class="task">
+    <div class="task" data-task-id="{{ task.id }}">
+
         <div class="hidden" id="TaskForm">
             {% csrf_token %}
             <div class="task-status">
@@ -41,7 +42,19 @@
                     <input type="checkbox" id="taskCompleted">
                     Выполнено
                 </label>
-                <button class="btn">Старт</button>
+                <button class="btn" id = "startButton">Старт</button>
+            </div>
+            <div id="timerModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" id="closeButton">&times;</span>
+                        <h2>Таймер</h2>
+                        <div id="timer">00:00</div>
+                        <div class="btn-container">
+                            <button class="btn" id="startTimerButton">Старт</button>
+                            <button class="btn" id="stopButton">Стоп</button>
+                            <button class="btn" id="resetButton">Сброс</button>
+                        </div>
+                    </div>
             </div>
             <input type="text" placeholder="Название задачи" id="taskName">
             <div class="deadline" >
@@ -74,6 +87,11 @@
                     <button id="removeSubtask" class="circle-btn">-</button>
                 </div>
             </div>
+            <div class="delete-button-container">
+                <button class="delete-task-button" data-task-id="{{ task.id }}">
+                    <img src="{% static 'tasks/img/delete.svg' %}" alt="Удалить" class="delete-icon_f">
+                </button>
+            </div>
 
             <button id = "SaveTask" class="btn">Сохранить</button>
         </div>
@@ -85,5 +103,7 @@
 {% block scripts %}
 <script type="module" src="{% static 'tasks/js/folders_view.js' %}"></script>
 <script type="module" src="{% static 'tasks/js/open_task_form.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/timer.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/delete_f.js' %}"></script>
 <script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}
