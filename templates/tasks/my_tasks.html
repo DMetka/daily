@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="main-area">
     <div class="area">
     <h1>Список задач на месяц</h1>
@@ -21,11 +22,33 @@
                 <button id="nextMonth" onclick="changeMonth(1)" class="btn">&#9654;</button>
             </div>
         </div>
+            <div class="controls-container">
+                <div class="sort-container">
+                    <label for="sortSelect" class="filter">Сортировка:</label>
+                    <select id="sortSelect" class="sort-select btn">
+                        <option value="">Выберите сортировку</option>
+                        <option value="status">Статус</option>
+                        <option value="priority">Приоритет</option>
+                        <option value="deadline">Дедлайн</option>
+                        <option value="title">Название</option>
+                        <option value="folders">Папки</option>
+                    </select>
+                </div>
+                <div class="filter-container">
+                    <label for="filterSelect" class="sort">Фильтр:</label>
+                    <select id="filterSelect" class="filter-select btn">
+                        <option value="">Выберите фильтрацию</option>
+                        <option value="status">Статус</option>
+                        <option value="priority">Приоритет</option>
+                        <option value="deadline">Дедлайн</option>
+                    </select>
+                </div>
+            </div>
         <div class="list_of_tasks">
             <!--Автоматическое добавление задач-->
         </div>
         <div class="list_of_forgotten_tasks" style="display: none;"></div>
-        <button id="forgotten" onclick="get_forgotten_tasks()" class="btn">&#9827;</button>
+        <button id="forgotten" onclick="get_forgotten_tasks()" class="btn">&#8617;</button>
         <div id="forgotten-container"></div>
 
         <div class="task">
@@ -36,7 +59,19 @@
                         <input type="checkbox" id="taskCompleted">
                         Выполнено
                     </label>
-                    <button class="btn">Старт</button>
+                    <button class="btn" id = "startButton">Старт</button>
+                </div>
+                <div id="timerModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" id="closeButton">&times;</span>
+                        <h2>Таймер</h2>
+                        <div id="timer">00:00</div>
+                        <div class="btn-container">
+                            <button class="btn" id="startTimerButton">Старт</button>
+                            <button class="btn" id="stopButton">Стоп</button>
+                            <button class="btn" id="resetButton">Сброс</button>
+                        </div>
+                    </div>
                 </div>
                 <input type="text" placeholder="Название задачи" id="taskName">
                 <div class="deadline" >
@@ -69,6 +104,11 @@
                         <button id="removeSubtask" class="circle-btn">-</button>
                     </div>
                 </div>
+                <div class="delete-button-container">
+                <button class="delete-task-button" data-task-id="{{ task.id }}">
+                    <img src="{% static 'tasks/img/delete.svg' %}" alt="Удалить" class="delete-icon_f">
+                </button>
+                </div>
 
                 <button id = "SaveTask" class="btn">Сохранить</button>
             </div>
@@ -83,6 +123,11 @@
 <script src="{% static 'tasks/js/forgotten_tasks.js' %}" type="module"></script>
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar_for_month.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/sort.js' %}"></script>
 <script src="{% static 'tasks/js/list_of_tasks.js' %}" type="module"></script>
-
+<script src="{% static 'tasks/js/filter.js' %}" type="module"></script>
+<script src="{% static 'tasks/js/filter_selector.js' %}" type="module" ></script>
+<script src="{% static 'tasks/js/timer.js' %}"></script>
+<script src="{% static 'tasks/js/delete_f.js' %}"></script>
+<script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}

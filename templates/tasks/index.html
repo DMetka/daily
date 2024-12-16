@@ -17,15 +17,7 @@
             <button class="btn search-btn" id="search-button" >Поиск</button>
             <div id="search-results"></div>
 
-            <div class="filter-container">
-                <label for="filterSelect" class="filter">Фильтр:</label>
-                <select id="filterSelect" class="filter-select btn">
-                    <option value="">Выберите фильтр</option>
-                    <option value="status">Статус</option>
-                    <option value="priority">Приоритет</option>
-                    <option value="tag">Тег</option>
-                </select>
-            </div>
+
 
             <div class="notification-container">
                 <img src="{% static 'tasks/img/bell-alarm.svg' %}" alt="Уведомления" class="notification-icon" onclick="toggleNotifications()">
@@ -48,7 +40,19 @@
                             <button class="btn btn-add-task">Добавить задачу</button>
                             <div class="tasks-container">
                                 {% for task in info.tasks %}
-                                    <h2 class="my_task_area">{{ task.title }}</h2>
+                                   <div class="my_task_area" data-task-id="{{ task.id }}"
+                                        data-task-full-text="{{ task.full_text }}"
+                                        data-task-deadline="{{ task.deadline|date:'Y-m-d' }}"
+                                        data-task-folder="{{ task.folder }}"
+                                        data-task-priority="{{ task.priority }}"
+                                        data-task-is-completed="{{ task.is_completed }}">
+                                       <h2>{{ task.title }}</h2>
+                                       <div class="delete-button-container">
+                                           <button class="delete-task-button" data-task-id="{{ task.id }}">
+                                               <img src="{% static 'tasks/img/delete.svg' %}" alt="Удалить" class="delete-icon">
+                                           </button>
+                                       </div>
+                                   </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -66,7 +70,19 @@
                         <input type="checkbox" id="taskCompleted">
                         Выполнено
                     </label>
-                    <button class="btn">Старт</button>
+                    <button class="btn" id = "startButton">Старт</button>
+                </div>
+                <div id="timerModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" id="closeButton">&times;</span>
+                        <h2>Таймер</h2>
+                        <div id="timer">00:00</div>
+                        <div class="btn-container">
+                            <button class="btn" id="startTimerButton">Старт</button>
+                            <button class="btn" id="stopButton">Стоп</button>
+                            <button class="btn" id="resetButton">Сброс</button>
+                        </div>
+                    </div>
                 </div>
                 <input type="text" placeholder="Название задачи" id="taskName">
                 <div class="deadline" >
@@ -114,5 +130,9 @@
 <script src="{% static 'tasks/js/calendar.js' %}"></script>
 <script src="{% static 'tasks/js/remind_task.js' %}"></script>
 <script src="{% static 'tasks/js/search_tasks.js' %}"></script>
-
+<script src="{% static 'tasks/js/timer.js' %}"></script>
+<script src="{% static 'tasks/js/delete.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/taskHandlers.js' %}"></script>
+<script src="{% static 'tasks/js/sort.js' %}"></script>
+<script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}

@@ -91,7 +91,7 @@ def go_back_to_index(request):
 def sort(request):
     user = request.user
     start_date_str = request.GET.get('start_date')
-    end_date_str = request.GET.get('end_data')
+    end_date_str = request.GET.get('end_date')
 
     if not start_date_str or not end_date_str:
         return JsonResponse({'error': 'start_date and end_date are required'}, status=400)
@@ -125,7 +125,7 @@ def sort(request):
 def filter(request):
     user = request.user
     start_date_str = request.GET.get('start_date')
-    end_date_str = request.GET.get('end_data')
+    end_date_str = request.GET.get('end_date')
 
     if not start_date_str or not end_date_str:
         return JsonResponse({'error': 'start_date and end_date are required'}, status=400)
@@ -150,7 +150,7 @@ def filter(request):
         tasks = tasks.filter(folders=folders, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
     if filter_by == 'status':
-        is_completed = request.GET.get('is_completed')
+        is_completed = request.GET.get('status')
         tasks = tasks.filter(is_completed=is_completed, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
 

@@ -59,10 +59,28 @@
     width: 250px;
     height: 30px;
     margin-bottom: 10px;
+    position:relative;
 }
 
 .my_task_area:hover {
     border: 1px solid #ccc;
 }
 
+.delete-button-container {
+    position: absolute; /* Устанавливаем абсолютное позиционирование для контейнера кнопки */
+    bottom: 10px; /* Отступ от нижней границы */
+    right: 10px; /* Отступ от правой границы */
+}
+
+.delete-task-button {
+    background: none; /* Убираем фон кнопки */
+    border: none; /* Убираем рамку кнопки */
+    cursor: pointer; /* Изменяем курсор при наведении */
+}
+
+
+.delete-icon {
+    width: 14px; /* Устанавливаем меньшую ширину иконки */
+    height: 14px; /* Устанавливаем меньшую высоту иконки */
+}
 
