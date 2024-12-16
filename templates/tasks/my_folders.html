@@ -33,7 +33,8 @@
                 </ul>
             </div>
     </div>
-    <div class="task">
+    <div class="task" data-task-id="{{ task.id }}">
+
         <div class="hidden" id="TaskForm">
             {% csrf_token %}
             <div class="task-status">
@@ -86,6 +87,11 @@
                     <button id="removeSubtask" class="circle-btn">-</button>
                 </div>
             </div>
+            <div class="delete-button-container">
+                <button class="delete-task-button" data-task-id="{{ task.id }}">
+                    <img src="{% static 'tasks/img/delete.svg' %}" alt="Удалить" class="delete-icon_f">
+                </button>
+            </div>
 
             <button id = "SaveTask" class="btn">Сохранить</button>
         </div>
@@ -98,6 +104,6 @@
 <script type="module" src="{% static 'tasks/js/folders_view.js' %}"></script>
 <script type="module" src="{% static 'tasks/js/open_task_form.js' %}"></script>
 <script type="module" src="{% static 'tasks/js/timer.js' %}"></script>
-<script type="module" src="{% static 'tasks/js/delete.js' %}"></script>
+<script type="module" src="{% static 'tasks/js/delete_f.js' %}"></script>
 <script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}

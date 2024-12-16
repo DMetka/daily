@@ -29,7 +29,7 @@
         <div id="forgotten-container"></div>
 
         <div class="task">
-            <div class="hidden" id="TaskForm">
+            <div class="hidden" id="TaskForm" data-task-id="{{ task.id }}>
                 {% csrf_token %}
                 <div class="task-status">
                     <label for="taskCompleted">
@@ -81,6 +81,11 @@
                         <button id="removeSubtask" class="circle-btn">-</button>
                     </div>
                 </div>
+                <div class="delete-button-container">
+                <button class="delete-task-button" data-task-id="{{ task.id }}">
+                    <img src="{% static 'tasks/img/delete.svg' %}" alt="Удалить" class="delete-icon_f">
+                </button>
+                </div>
 
                 <button id = "SaveTask" class="btn">Сохранить</button>
             </div>
@@ -96,7 +101,7 @@
 <script src="{% static 'tasks/js/subtask.js' %}"></script>
 <script src="{% static 'tasks/js/calendar_for_month.js' %}"></script>
 <script src="{% static 'tasks/js/list_of_tasks.js' %}" type="module"></script>
-<script src="{% static 'tasks/js/timer.js' %}" type="module"></script>
-<script src="{% static 'tasks/js/delete.js' %}" type="module"></script>
+<script src="{% static 'tasks/js/timer.js' %}"></script>
+<script src="{% static 'tasks/js/delete_f.js' %}"></script>
 <script> const foldersUrl = "{% url 'get_all_folders' %}" </script>
 {% endblock %}
