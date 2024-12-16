@@ -152,7 +152,6 @@ def filter(request):
     if filter_by == 'status':
         is_completed = request.GET.get('status')
         tasks = tasks.filter(is_completed=is_completed, user=user).values()
-        print(list(tasks))
         return JsonResponse({'tasks': list(tasks)})
 
 
