@@ -150,8 +150,9 @@ def filter(request):
         tasks = tasks.filter(folders=folders, user=user).values()
         return JsonResponse({'tasks': list(tasks)})
     if filter_by == 'status':
-        is_completed = request.GET.get('is_completed')
+        is_completed = request.GET.get('status')
         tasks = tasks.filter(is_completed=is_completed, user=user).values()
+        print(list(tasks))
         return JsonResponse({'tasks': list(tasks)})
 
 
