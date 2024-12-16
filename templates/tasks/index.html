@@ -17,15 +17,7 @@
             <button class="btn search-btn" id="search-button" >Поиск</button>
             <div id="search-results"></div>
 
-            <div class="filter-container">
-                <label for="filterSelect" class="filter">Фильтр:</label>
-                <select id="filterSelect" class="filter-select btn">
-                    <option value="">Выберите фильтр</option>
-                    <option value="status">Статус</option>
-                    <option value="priority">Приоритет</option>
-                    <option value="tag">Тег</option>
-                </select>
-            </div>
+
 
             <div class="notification-container">
                 <img src="{% static 'tasks/img/bell-alarm.svg' %}" alt="Уведомления" class="notification-icon" onclick="toggleNotifications()">
